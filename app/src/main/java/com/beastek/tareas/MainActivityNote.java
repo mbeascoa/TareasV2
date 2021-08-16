@@ -5,12 +5,15 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
+import android.graphics.Color;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Build;
 import android.os.Bundle;
 
+import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -35,6 +38,7 @@ import androidx.cardview.widget.CardView;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import com.beastek.tareas.Note;
 
@@ -48,7 +52,7 @@ public class MainActivityNote extends AppCompatActivity {
 
     private Animation mAnimFlash;
     private Animation mAnimFadeIn;
-    private int noteSelected =-1;  //initialize the note, if there is no note -1
+    private int noteSelectedId =-1;  //initialize the note, if there is no note -1
     private Object mActionMode;
 
 
@@ -64,14 +68,30 @@ public class MainActivityNote extends AppCompatActivity {
         ListView listNote = (ListView) findViewById(R.id.list_view);
         listNote.setAdapter(mNoteAdapter);
 
+        /*  listNote.setEmptyView(findViewById(R.id.empty_list_item));  sale una nota de texto
+         <TextView
+        android:id="@+id/empty_list_item"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:text="There are NO tasks, add one if you want pressin the + top right icon" >
+         </TextView>
+         we put that statement if we want to include a TEXT MESSAGE, we provided an Image, empty_view_bg
+         we use the following command....and use visibility = "gone" in the XML definition for @+id/empty_list_item
+         */
+
+        listNote.setEmptyView(findViewById(R.id.empty_list_item));
+
+
         // we make a beep sound when entering in the cardview defined within listview
         listNote.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int itemPos, long id) {
 
-                if(mSound){
+              if(mSound){
                     mSp.play(mIdBeep, 1, 1, 0, 0, 1);
                 }
+                Toast.makeText(MainActivityNote.this, "Solo funciona cuando se toca en los bordes de la cardview", Toast.LENGTH_SHORT).show();
 
                 //Recuperamos la nota de la posición pulsada por el usuario
                 Note tempNote = mNoteAdapter.getItem(itemPos);
@@ -80,6 +100,8 @@ public class MainActivityNote extends AppCompatActivity {
                 DialogShowNote dialog = new DialogShowNote();
                 dialog.sendNoteSelected(tempNote);
                 dialog.show(getSupportFragmentManager(), "show_note");
+
+
 
             }
         });
@@ -92,7 +114,7 @@ public class MainActivityNote extends AppCompatActivity {
         listNote.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int whichItem, long id) {
-                noteSelected = whichItem;
+                noteSelectedId = whichItem;
                 mActionMode = startActionMode(amc);
                 view.setSelected(true);
                 return true;
@@ -142,11 +164,12 @@ public class MainActivityNote extends AppCompatActivity {
         @Override
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
             if(item.getItemId()== R.id.item_delete_note){
-                deleteNote(noteSelected);
+                deleteNote(noteSelectedId);
                 mode.finish();
             }
             if (item.getItemId()==R.id.item_add_date_note){
-                Toast.makeText(MainActivityNote.this, "Metemos recordatorio de fechas", Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivityNote.this, "We add a reminder to the note", Toast.LENGTH_LONG).show();
+
             }
             if(item.getItemId()==R.id.item_exit_note){
                 Toast.makeText(MainActivityNote.this, "Salimos sin hacer nada", Toast.LENGTH_LONG).show();
@@ -292,10 +315,12 @@ public class MainActivityNote extends AppCompatActivity {
 
             TextView textViewTitle = (TextView) view.findViewById(R.id.text_view_title);
             TextView textViewDescription = (TextView) view.findViewById(R.id.text_view_description);
+            TextView mReminderTextView = (TextView) view.findViewById(R.id.tv_date_listview);
 
             ImageView ivImportant = (ImageView) view.findViewById(R.id.image_view_important);
             ImageView ivTodo = (ImageView) view.findViewById(R.id.image_view_todo);
             ImageView ivIdea = (ImageView) view.findViewById(R.id.image_view_idea);
+
 
             //y podemos proceder a ocultar las imágenes que sobren del layout...
             //y rellenar título y descripción de la tarea
@@ -320,11 +345,13 @@ public class MainActivityNote extends AppCompatActivity {
                 ivIdea.setVisibility(View.GONE);
             }
 
-
             textViewTitle.setText(currentNote.getTitle());
             textViewDescription.setText(currentNote.getDescription());
+            mReminderTextView.setText("Es una cagada");
+
             return view;
         }
+
 
 
         public void addNote(Note n){

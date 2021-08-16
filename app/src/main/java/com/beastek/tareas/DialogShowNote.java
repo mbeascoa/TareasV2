@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.os.Bundle;
 
 import android.text.format.DateFormat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -15,10 +14,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
-import org.w3c.dom.Text;
-
-import java.util.Calendar;
-import java.util.Objects;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -42,8 +37,10 @@ public class DialogShowNote extends DialogFragment {
 
         View dialogView = inflater.inflate(R.layout.dialog_show_note, null);
 
-        TextView txtTitle = (TextView) dialogView.findViewById(R.id.txtTitle);
-        TextView txtDescription = (TextView) dialogView.findViewById(R.id.txtDescription);
+        TextView txtTitle = (TextView) dialogView.findViewById(R.id.txtTitle_show_note);
+        TextView txtDescription = (TextView) dialogView.findViewById(R.id.txtDescription_show_note);
+        TextView txtReminder = (TextView) dialogView.findViewById(R.id.txtReminder_show_note);
+        TextView txtDateTime = (TextView) dialogView.findViewById(R.id.txtDate_show_note);
 
         txtTitle.setText(mNote.getTitle());
         txtDescription.setText(mNote.getDescription());
@@ -52,8 +49,6 @@ public class DialogShowNote extends DialogFragment {
         ImageView ivImportant = (ImageView) dialogView.findViewById(R.id.imageViewImportant);
         ImageView ivTodo = (ImageView) dialogView.findViewById(R.id.imageViewTodo);
         ImageView ivIdea = (ImageView) dialogView.findViewById(R.id.imageViewIdea);
-        TextView msgReminder = (TextView) dialogView.findViewById(R.id.tv_showReminder);
-        TextView msgDateTime = (TextView) dialogView.findViewById(R.id.tv_date_show_note);
 
 
         //Cada imagen se oculta si la nota no es de ese tipo
@@ -67,11 +62,14 @@ public class DialogShowNote extends DialogFragment {
             ivIdea.setVisibility(View.GONE);
         }
 
-        if (!mNote.HasReminder()){
-            msgReminder.setVisibility(View.GONE);
-            msgDateTime.setVisibility(View.GONE);
+
+       if (!mNote.HasReminder()){
+            txtReminder.setVisibility(View.GONE);
+            txtDateTime.setVisibility(View.GONE);
         } else {
-            msgReminder.setText("Yo have to manage this task on :");
+           txtReminder.setVisibility(View.VISIBLE);
+           txtDateTime.setVisibility(View.VISIBLE);
+           txtReminder.setText("Yo have to manage this task on :");
             //includes the date and time to you show note
             Date date = mNote.getToDoDate();
             String dateString = formatDate("d MMM, yyyy", date);
@@ -85,9 +83,11 @@ public class DialogShowNote extends DialogFragment {
                 amPmString = formatDate("a", date);
             }
             String finalString = String.format(getResources().getString(R.string.remind_date_and_time), dateString, timeString, amPmString);
-            msgDateTime.setTextColor(getResources().getColor(R.color.secondary_text));
-            msgDateTime.setText(finalString);
+            txtDateTime.setTextColor(getResources().getColor(R.color.secondary_text));
+            txtDateTime.setText(finalString);
         }
+
+
 
         Button btnOk = (Button) dialogView.findViewById(R.id.btnOk);
 

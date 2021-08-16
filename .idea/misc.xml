@@ -4,6 +4,11 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.1" />
+        <entry key="..\:/AndroidEjemplos/Tareas/app/src/main/res/layout/activity_main_note.xml" value="0.1" />
+        <entry key="..\:/AndroidEjemplos/Tareas/app/src/main/res/layout/activity_show_note.xml" value="0.20416666666666666" />
+        <entry key="..\:/AndroidEjemplos/Tareas/app/src/main/res/layout/dialog_new_note_old.xml" value="0.18854166666666666" />
+        <entry key="..\:/AndroidEjemplos/Tareas/app/src/main/res/layout/dialog_show_note.xml" value="0.20416666666666666" />
+        <entry key="..\:/AndroidEjemplos/Tareas/app/src/main/res/layout/list_item_note.xml" value="0.18854166666666666" />
         <entry key="app/src/main/res/drawable/backarrow.xml" value="0.14375" />
         <entry key="app/src/main/res/drawable/blackback.xml" value="0.14375" />
         <entry key="app/src/main/res/drawable/ic_content_copy_black_24dp.xml" value="0.26666666666666666" />

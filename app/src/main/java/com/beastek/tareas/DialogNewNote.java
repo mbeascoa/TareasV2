@@ -149,8 +149,9 @@ public class DialogNewNote extends DialogFragment implements DatePickerDialog.On
         btnOk = (Button) dialogView.findViewById(R.id.btnOk);
 
 
-        builder.setView(dialogView);
-        //  .setMessage("Add a new note ");   si quisiéramos introducir una cabecera o mensaje pero quita espacio al dialog
+        builder.setView(dialogView)
+                .setMessage("Add a new note ");
+        //si quisiéramos introducir una cabecera o mensaje pero quita espacio al dialog
 
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -168,27 +169,31 @@ public class DialogNewNote extends DialogFragment implements DatePickerDialog.On
                 //Creamos una nota vacía
                 Note newNote = new Note();
 
-                //Configuramos las 7 variables de la nota creada
-                newNote.setTitle(mToDoTextBodyTitle.getText().toString());
-                newNote.setDescription(mToDoTextBodyDescription.getText().toString());
-
-                newNote.setIdea(checkBoxIdea.isChecked());
-                newNote.setTodo(checkBoxTodo.isChecked());
-                newNote.setImportant(checkBoxImportant.isChecked());
-
-                if (mToDoDateSwitch.isChecked() && (newNote.getToDoDate() != null)) {
-                    newNote.setReminder(true);
+                if (mToDoTextBodyTitle.length() <= 0) {
+                    mToDoTextBodyTitle.setError(getString(R.string.todo_error));
                 } else {
-                    newNote.setReminder(false);
+
+                    //Configuramos las 7 variables de la nota creada
+                    newNote.setTitle(mToDoTextBodyTitle.getText().toString());
+                    newNote.setDescription(mToDoTextBodyDescription.getText().toString());
+
+                    newNote.setIdea(checkBoxIdea.isChecked());
+                    newNote.setTodo(checkBoxTodo.isChecked());
+                    newNote.setImportant(checkBoxImportant.isChecked());
+
+                    if (mToDoDateSwitch.isChecked() && (newNote.getToDoDate() != null)) {
+                        newNote.setReminder(true);
+                    } else {
+                        newNote.setReminder(false);
+                    }
+
+                    //I am casting to MainActivity who is the one thal called the dialog; Hago un casting a Main Activity, que es quien ha llamado al diálogo
+                    MainActivityNote callingActivity = (MainActivityNote) getActivity();
+                    //We will notify the Main Activity that we have created a new Note ; Notificaremos a la MA que hemos creado una nueva nota
+                    callingActivity.createNewNote(newNote);
+                    //This command close the dialog, Esto cierra el diálogo
+                    dismiss();
                 }
-
-                //I am casting to MainActivity who is the one thal called the dialog; Hago un casting a Main Activity, que es quien ha llamado al diálogo
-                MainActivityNote callingActivity = (MainActivityNote) getActivity();
-                //We will notify the Main Activity that we have created a new Note ; Notificaremos a la MA que hemos creado una nueva nota
-                callingActivity.createNewNote(newNote);
-
-                //This command close the dialog, Esto cierra el diálogo
-                dismiss();
             }
         });
 
@@ -234,6 +239,7 @@ public class DialogNewNote extends DialogFragment implements DatePickerDialog.On
             public void afterTextChanged(Editable s) {
             }
         });
+
         mToDoTextBodyDescription.setText(mUserEnteredDescription);
         mToDoTextBodyDescription.setSelection(mToDoTextBodyDescription.length());
         mToDoTextBodyDescription.addTextChangedListener(new TextWatcher() {
@@ -273,151 +279,97 @@ public class DialogNewNote extends DialogFragment implements DatePickerDialog.On
 
 
         mToDoSendFloatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View v) {
 
-                //Instanciamos un objeto localDate para obtener la fecha actual
-                //Today = LocalDate.now();
+                //Creamos una nota vacía
+                Note newNote = new Note();
+
                 if (mToDoTextBodyTitle.length() <= 0) {
                     mToDoTextBodyTitle.setError(getString(R.string.todo_error));
-                } else if (mUserReminderDate != null && mUserReminderDate.before(new Date()))
-                // else if (mUserReminderDate != null && mUserReminderDateLD.isBefore(Today))
-
-                // Podemos preguntar si una fecha es anterior o posterior a otra isBefore, isAfter
-
-                //System.out.println("¿El empleado se ha dado de alta antes de la fecha actual? " + fechaAlta.isBefore(fechaActual));
-
-                {
-                    Toast.makeText(getContext(), "You can not create a Note for this date!!", Toast.LENGTH_SHORT).show();
-
-                }
-
-                // makeResult(RESULT_OK);
-                Toast.makeText(getContext(), "Saving the task, please wait ...", Toast.LENGTH_SHORT).show();
-                // we give format to the Tittle, Capitalized Strings
-                if (mUserEnteredTittle.length() > 0) {
-
-                    String capitalizedString = Character.toUpperCase(mUserEnteredTittle.charAt(0)) + mUserEnteredTittle.substring(1);
-                    mUserToDoItem.setTitle(capitalizedString);
-                    Log.d(TAG, "Description: " + mUserEnteredDescription);
-                    mUserToDoItem.setDescription(mUserEnteredDescription);
                 } else {
-                    mUserToDoItem.setTitle(mUserEnteredTittle);
-                    Log.d(TAG, "Description: " + mUserEnteredDescription);
-                    mUserToDoItem.setDescription(mUserEnteredDescription);
-                }
 
-                if (mUserReminderDate != null) {
-                    Calendar calendar = Calendar.getInstance();
-                    calendar.setTime(mUserReminderDate);
-                    calendar.set(Calendar.SECOND, 0);
-                    mUserReminderDate = calendar.getTime();
-                }
-                mUserToDoItem.setReminder(mUserHasReminder);
-                mUserToDoItem.setToDoDate(mUserReminderDate);
+                    //Configuramos las 7 variables de la nota creada
+                    newNote.setTitle(mToDoTextBodyTitle.getText().toString());
+                    newNote.setDescription(mToDoTextBodyDescription.getText().toString());
 
-                    /*
+                    newNote.setIdea(checkBoxIdea.isChecked());
+                    newNote.setTodo(checkBoxTodo.isChecked());
+                    newNote.setImportant(checkBoxImportant.isChecked());
 
-                    if (mUserReminderDate != null) {
-
-                        Calendar calendar = Calendar.getInstance();
-                        calendar.setTime(mUserReminderDate);
-                        calendar.set(Calendar.SECOND, 0);
-                        mUserReminderDate = calendar.getTime();
-                        mUserToDoItem.setReminder(false);
-
-                    } else if (mUserHasReminder && mUserToDoItem.getToDoDate()!= null) {
-
-                        mUserToDoItem.setReminder(true);
+                    if (mToDoDateSwitch.isChecked() && (newNote.getToDoDate() != null)) {
+                        newNote.setReminder(true);
+                    } else {
+                        newNote.setReminder(false);
                     }
 
-                     */
-
-                //Configuramos las 7 variables de la nota creada
-                //mUserToDoItem.setTitle ya está capturada y transformada a Capitalized
-                //mUserToDoItem.setDescription ya está capturada
-
-                mUserToDoItem.setIdea(checkBoxIdea.isChecked());
-                mUserToDoItem.setTodo(checkBoxTodo.isChecked());
-                mUserToDoItem.setImportant(checkBoxImportant.isChecked());
-                // mUserToDoItem.setReminder ya está capturada
-                // mUserToDoItem.setToDoDate ya está capturada
-
-                //Hago un casting a Main Activity, que es quien ha llamado al diálogo
-                MainActivityNote callingActivity = (MainActivityNote) getActivity();
-                //Notificaremos a la MA que hemos creado una nueva nota
-                callingActivity.createNewNote(mUserToDoItem);
-
-                //Esto cierra el diálogo
-                dismiss();
-
-                //getActivity().finish();
+                    //I am casting to MainActivity who is the one thal called the dialog; Hago un casting a Main Activity, que es quien ha llamado al diálogo
+                    MainActivityNote callingActivity = (MainActivityNote) getActivity();
+                    //We will notify the Main Activity that we have created a new Note ; Notificaremos a la MA que hemos creado una nueva nota
+                    callingActivity.createNewNote(newNote);
+                    //This command close the dialog, Esto cierra el diálogo
+                    dismiss();
+                }
             }
+        });
 
 
-    });
+        // filed that places the Date as string, from mUserReminderDate
+        mDateEditText = (EditText) dialogView.findViewById(R.id.newTodoDateEditText);
 
-    // filed that places the Date as string, from mUserReminderDate
-    mDateEditText =(EditText)dialogView.findViewById(R.id.newTodoDateEditText);
+        //Listener to Date picker
+        mDateEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-    //Listener to Date picker
-        mDateEditText.setOnClickListener(new View.OnClickListener()
+                Date date;
+                hideKeyboard(mToDoTextBodyTitle);
+                hideKeyboard(mToDoTextBodyDescription);
 
-    {
-        @Override
-        public void onClick (View v){
+                date = new Date();
 
-        Date date;
-        hideKeyboard(mToDoTextBodyTitle);
-        hideKeyboard(mToDoTextBodyDescription);
-
-        date = new Date();
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH);
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(date);
+                int year = calendar.get(Calendar.YEAR);
+                int month = calendar.get(Calendar.MONTH);
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
 
 
-        DatePickerDialog datePickerDialog = DatePickerDialog.newInstance(DialogNewNote.this, year, month, day);
-        datePickerDialog.show(getActivity().getFragmentManager(), "DateFragment");
-    }
-    });
+                DatePickerDialog datePickerDialog = DatePickerDialog.newInstance(DialogNewNote.this, year, month, day);
+                datePickerDialog.show(getActivity().getFragmentManager(), "DateFragment");
+            }
+        });
 
-    //field where we put the time from mUserReminderDate
-    mTimeEditText =(EditText)dialogView.findViewById(R.id.newTodoTimeEditText);
+        //field where we put the time from mUserReminderDate
+        mTimeEditText = (EditText) dialogView.findViewById(R.id.newTodoTimeEditText);
 
-    // listener to Edit Time
-        mTimeEditText.setOnClickListener(new View.OnClickListener()
+        // listener to Edit Time
+        mTimeEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-    {
-        @Override
-        public void onClick (View v){
+                Date date;
+                hideKeyboard(mToDoTextBodyTitle);
+                hideKeyboard(mToDoTextBodyDescription);
+                date = new Date();
 
-        Date date;
-        hideKeyboard(mToDoTextBodyTitle);
-        hideKeyboard(mToDoTextBodyDescription);
-        date = new Date();
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(date);
+                int hour = calendar.get(Calendar.HOUR_OF_DAY);
+                int minute = calendar.get(Calendar.MINUTE);
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        int hour = calendar.get(Calendar.HOUR_OF_DAY);
-        int minute = calendar.get(Calendar.MINUTE);
+                TimePickerDialog timePickerDialog = TimePickerDialog.newInstance(DialogNewNote.this, hour, minute, DateFormat.is24HourFormat(getContext()));
+                timePickerDialog.show(getActivity().getFragmentManager(), "TimeFragment");
+            }
+        });
 
-        TimePickerDialog timePickerDialog = TimePickerDialog.newInstance(DialogNewNote.this, hour, minute, DateFormat.is24HourFormat(getContext()));
-        timePickerDialog.show(getActivity().getFragmentManager(), "TimeFragment");
-    }
-    });
+        // settle Date and Time,
+        setDateAndTimeEditText();
 
-    // settle Date and Time,
-    setDateAndTimeEditText();
-
-    //Una vez configurada nuestro dialogo, le indicamos al builder que debe crearla en pantalla...
+        //Una vez configurada nuestro dialogo, le indicamos al builder que debe crearla en pantalla...
         return builder.create();
 
-}
+    }
 
     // Saves Data and Time Edit Text
     private void setDateAndTimeEditText() {
@@ -460,7 +412,7 @@ public class DialogNewNote extends DialogFragment implements DatePickerDialog.On
         reminderCalendar.set(year, month, day);
 
         if (reminderCalendar.before(calendar)) {
-            Toast.makeText(getContext(), "Sólo agendamos fechas a partir de mañana", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "We only add dates from now on. Not in the past", Toast.LENGTH_SHORT).show();
             return;
         }
 
