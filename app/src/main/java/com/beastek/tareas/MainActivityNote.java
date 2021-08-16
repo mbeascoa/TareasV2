@@ -11,24 +11,32 @@ import android.media.SoundPool;
 import android.os.Build;
 import android.os.Bundle;
 
+import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
+
+
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import com.beastek.tareas.Note;
 
 public class MainActivityNote extends AppCompatActivity {
 
@@ -40,6 +48,9 @@ public class MainActivityNote extends AppCompatActivity {
 
     private Animation mAnimFlash;
     private Animation mAnimFadeIn;
+    private int noteSelected =-1;  //initialize the note, if there is no note -1
+    private Object mActionMode;
+
 
     int mIdBeep = -1;
     SoundPool mSp;
@@ -49,11 +60,11 @@ public class MainActivityNote extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_note);
 
-
         mNoteAdapter = new NoteAdapter();
         ListView listNote = (ListView) findViewById(R.id.list_view);
         listNote.setAdapter(mNoteAdapter);
 
+        // we make a beep sound when entering in the cardview defined within listview
         listNote.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int itemPos, long id) {
@@ -68,22 +79,25 @@ public class MainActivityNote extends AppCompatActivity {
                 //Creamos una instancia de show note
                 DialogShowNote dialog = new DialogShowNote();
                 dialog.sendNoteSelected(tempNote);
-                dialog.show(getSupportFragmentManager(),"");
+                dialog.show(getSupportFragmentManager(), "show_note");
+
             }
         });
 
-
+        //we allow long Clickable in listview items
         listNote.setLongClickable(true);
+
+        listNote.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
         listNote.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int whichItem, long id) {
-                mNoteAdapter.deleteNote(whichItem);
-                return false;
+                noteSelected = whichItem;
+                mActionMode = startActionMode(amc);
+                view.setSelected(true);
+                return true;
             }
         });
-
-
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
@@ -113,7 +127,44 @@ public class MainActivityNote extends AppCompatActivity {
 
     }
 
+    private ActionMode.Callback amc = new ActionMode.Callback() {
+        @Override
+        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+            getMenuInflater().inflate(R.menu.menu_crud_note, menu);
+            return true;
+        }
 
+        @Override
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+            return false;
+        }
+
+        @Override
+        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+            if(item.getItemId()== R.id.item_delete_note){
+                deleteNote(noteSelected);
+                mode.finish();
+            }
+            if (item.getItemId()==R.id.item_add_date_note){
+                Toast.makeText(MainActivityNote.this, "Metemos recordatorio de fechas", Toast.LENGTH_LONG).show();
+            }
+            if(item.getItemId()==R.id.item_exit_note){
+                Toast.makeText(MainActivityNote.this, "Salimos sin hacer nada", Toast.LENGTH_LONG).show();
+                finish();
+            }
+
+            return false;
+        }
+
+        @Override
+        public void onDestroyActionMode(ActionMode mode) {
+        }
+    };
+
+    // delete the selected Item within the list view
+    private void deleteNote(int whichItem){
+        mNoteAdapter.deleteNote(whichItem);
+    }
 
     //El método on Resume se llama tanto después del On Create, como cuando volvemos a la actividad después de pasar por otra
     @Override
@@ -151,7 +202,6 @@ public class MainActivityNote extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-
         int id = item.getItemId();
 
         Intent accion;
@@ -166,13 +216,14 @@ public class MainActivityNote extends AppCompatActivity {
         {
             accion = new Intent(MainActivityNote.this, SettingsActivityNote.class);
             startActivity(accion);
+        } else if (id== R.id.action_about)
+        {
+            accion = new Intent(MainActivityNote.this, AboutActivity.class);
+            startActivity(accion);
         }
-
-
         return true;
 
     }
-
 
 
     @Override
@@ -237,6 +288,8 @@ public class MainActivityNote extends AppCompatActivity {
             //Cuando estamos aquí, ya tenemos la vista bien definida
             //cargamos todos los widgets del layout
 
+            CardView cardView = (CardView)  view.findViewById(R.id.cv_item_list_note);
+
             TextView textViewTitle = (TextView) view.findViewById(R.id.text_view_title);
             TextView textViewDescription = (TextView) view.findViewById(R.id.text_view_description);
 
@@ -270,7 +323,6 @@ public class MainActivityNote extends AppCompatActivity {
 
             textViewTitle.setText(currentNote.getTitle());
             textViewDescription.setText(currentNote.getDescription());
-
             return view;
         }
 
@@ -289,8 +341,6 @@ public class MainActivityNote extends AppCompatActivity {
 
 
     }
-
-
 
 
 }

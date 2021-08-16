@@ -18,4 +18,6 @@
     <string name="title_hint">Título</string>
     <string name="todo_checkbox">Tarea</string>
     <string name="activity_settings_title">Ajustes</string>
+    <string name="app_version">Version: %1$s</string>
+    <string name="activity_about_title">Acerca de</string>
 </resources>

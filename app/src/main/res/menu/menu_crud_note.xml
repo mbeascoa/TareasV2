@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:icon="@android:drawable/ic_menu_delete"
+        android:id="@+id/item_delete_note"
+        android:title="Delete Note"
+        app:showAsAction="always"/>
+    <item
+        android:icon="@android:drawable/ic_menu_my_calendar"
+        android:id="@+id/item_add_date_note"
+        android:title="Add Reminder to Note"
+        app:showAsAction="always"/>
+    <item
+        android:icon="@android:drawable/ic_menu_close_clear_cancel"
+        android:id="@+id/item_exit_note"
+        android:title="Exit"
+        app:showAsAction="always"/>
+</menu>
