@@ -4,9 +4,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Date;
+import java.io.Serializable;
+import java.util.UUID;
 
 
-public class Note {
+public class Note implements Serializable {
 
     private String mTitle;
     private String mDescription;
@@ -15,6 +17,8 @@ public class Note {
     private boolean mImportant;
     private boolean mHasReminder;
     private Date mToDoDate;
+    private int mTodoColor;
+    private UUID mTodoIdentifier;
 
 
     private static final String JSON_TITLE = "title";
@@ -24,12 +28,29 @@ public class Note {
     private static final String JSON_IMPORTANT = "important";
     private static final String JSON_HASREMINDER = "reminder";
     private static final String JSON_DATETIME = "datetime";
+    private static final String JSON_COLOR = "todocolor";
+    private static final String JSON_IDENTIFIER ="todoidentifier";
 
 
     //Constructor base vacío
     public Note(){
+    }
+
+    public Note(String todoTitle,String todoDescription, boolean todoIdea, boolean todoTodo,  boolean todoImportant ,boolean hasReminder, Date toDoDate) {
+        mTitle = todoTitle;
+        mDescription = todoDescription;
+        mIdea = todoIdea;
+        mTodo= todoTodo;
+        mImportant = todoImportant;
+        mHasReminder = hasReminder;
+        mToDoDate = toDoDate;
+        mTodoColor = 1677725;
+        mTodoIdentifier = UUID.randomUUID();
 
     }
+
+
+
 
     //Constructor para crear una nota a partir de un objeto JSON
     public Note(JSONObject jo) throws JSONException{
@@ -39,9 +60,13 @@ public class Note {
         mTodo = jo.getBoolean(JSON_TODO);
         mImportant = jo.getBoolean(JSON_IMPORTANT);
         mHasReminder = jo.getBoolean(JSON_HASREMINDER);
+        mTodoColor = jo.getInt(JSON_COLOR);
+        mTodoIdentifier = UUID.fromString(jo.getString(JSON_IDENTIFIER));
         if (jo.has(JSON_DATETIME)) {
             mToDoDate = new Date(jo.getLong(JSON_DATETIME));
         }
+
+
 
     }
 
@@ -60,6 +85,8 @@ public class Note {
         if (mToDoDate != null) {
             jo.put(JSON_DATETIME, mToDoDate.getTime());
         }
+        jo.put(JSON_COLOR, mTodoColor);
+        jo.put(JSON_IDENTIFIER, mTodoIdentifier.toString());
 
         return jo;
     }
@@ -121,5 +148,19 @@ public class Note {
     public void setToDoDate(Date mToDoDate) {
         this.mToDoDate = mToDoDate;
     }
+
+
+    public int getmTodoColor() {
+        return mTodoColor;
+    }
+
+    public void setTodoColor(int mTodoColor) {
+        this.mTodoColor = mTodoColor;
+    }
+
+    public UUID getmTodoIdentifier() {
+        return mTodoIdentifier;
+    }
+
 
 }

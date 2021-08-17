@@ -41,6 +41,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
+import android.widget.ImageView;
 import androidx.core.app.NavUtils;
 import androidx.fragment.app.DialogFragment;
 
@@ -57,6 +58,8 @@ import static java.time.DayOfWeek.*;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
+import com.amulyakhare.textdrawable.TextDrawable;
+import com.amulyakhare.textdrawable.util.ColorGenerator;
 
 
 public class DialogNewNote extends DialogFragment implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
@@ -94,6 +97,7 @@ public class DialogNewNote extends DialogFragment implements DatePickerDialog.On
     public static final String DATE_FORMAT_TIME = "H:m";
 
     private LinearLayout mContainerLayout;
+    private ImageView image;
 
 
     @Override
@@ -147,6 +151,7 @@ public class DialogNewNote extends DialogFragment implements DatePickerDialog.On
 
         btnCancel = (Button) dialogView.findViewById(R.id.btnCancel);
         btnOk = (Button) dialogView.findViewById(R.id.btnOk);
+        image = (ImageView) dialogView.findViewById(R.id.image_view);
 
 
         builder.setView(dialogView)
@@ -180,6 +185,12 @@ public class DialogNewNote extends DialogFragment implements DatePickerDialog.On
                     newNote.setIdea(checkBoxIdea.isChecked());
                     newNote.setTodo(checkBoxTodo.isChecked());
                     newNote.setImportant(checkBoxImportant.isChecked());
+                    TextDrawable drawable = TextDrawable.builder()
+                            .buildRoundRect("A", Color.RED, 10);
+
+                    image.setImageDrawable(drawable);
+                    int color = ColorGenerator.MATERIAL.getRandomColor();
+                    newNote.setTodoColor(color);
 
                     if (mToDoDateSwitch.isChecked() && (newNote.getToDoDate() != null)) {
                         newNote.setReminder(true);

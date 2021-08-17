@@ -101,8 +101,6 @@ public class MainActivityNote extends AppCompatActivity {
                 dialog.sendNoteSelected(tempNote);
                 dialog.show(getSupportFragmentManager(), "show_note");
 
-
-
             }
         });
 
@@ -256,6 +254,7 @@ public class MainActivityNote extends AppCompatActivity {
         mNoteAdapter.saveNotes();
     }
 
+    // NOTEADAPTER
     public class NoteAdapter extends BaseAdapter {
 
         List<Note> noteList = new ArrayList<Note>();
@@ -333,8 +332,6 @@ public class MainActivityNote extends AppCompatActivity {
                 view.setAnimation(mAnimFadeIn);
             }
 
-
-
             if (!currentNote.isImportant()){
                 ivImportant.setVisibility(View.GONE);
             }
@@ -347,7 +344,7 @@ public class MainActivityNote extends AppCompatActivity {
 
             textViewTitle.setText(currentNote.getTitle());
             textViewDescription.setText(currentNote.getDescription());
-            mReminderTextView.setText("Es una cagada");
+            mReminderTextView.setText("Aquí iria la fecha");
 
             return view;
         }
@@ -364,8 +361,6 @@ public class MainActivityNote extends AppCompatActivity {
             noteList.remove(n);
             notifyDataSetChanged();
         }
-
-
 
     }
 

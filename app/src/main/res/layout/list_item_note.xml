@@ -22,6 +22,10 @@
             android:layout_height="match_parent"
             android:background="#C5CAE9">
 
+            <ImageView android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:id="@+id/image_view"/>
+
             <ImageView
                 android:id="@+id/image_view_important"
                 android:layout_width="wrap_content"
