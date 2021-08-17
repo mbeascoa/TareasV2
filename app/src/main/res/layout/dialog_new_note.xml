@@ -23,8 +23,8 @@
                 android:id="@+id/editTextParentLinearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight=".4"
-                android:gravity="center"
+                android:layout_weight=".5"
+                android:gravity="bottom"
                 android:orientation="vertical">
 
 
@@ -38,10 +38,9 @@
                     <EditText
                         android:id="@+id/userToDoEditTextTitle"
                         android:layout_width="match_parent"
-                        android:layout_height="70dp"
+                        android:layout_height="50dp"
                         android:layout_marginLeft="32dp"
                         android:layout_marginRight="32dp"
-                        android:layout_weight="0"
                         android:gravity="start|bottom"
                         android:hint="Tittle"
                         android:textColorHint="@color/mdtp_light_gray"
