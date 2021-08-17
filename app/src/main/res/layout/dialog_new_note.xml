@@ -24,7 +24,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight=".4"
-                android:background="?attr/colorPrimary"
                 android:gravity="center"
                 android:orientation="vertical">
 
@@ -42,13 +41,16 @@
                         android:layout_height="70dp"
                         android:layout_marginLeft="32dp"
                         android:layout_marginRight="32dp"
-                        android:gravity="start"
+                        android:layout_weight="0"
+                        android:gravity="start|bottom"
                         android:hint="Tittle"
+                        android:textColorHint="@color/mdtp_light_gray"
                         android:inputType="textAutoCorrect|textCapSentences"
                         android:lines="2"
                         android:maxLength="30"
                         android:maxLines="3"
-                        android:textColor="@color/icons" />
+                        android:scrollbars="vertical"
+                        android:textColor="@color/mdtp_light_gray" />
 
                 </com.beastek.tareas.CustomTextInputLayout>
 
@@ -59,9 +61,8 @@
                 android:id="@+id/toDoCustomTextInput01"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#3949AB"
                 android:gravity="center"
-                android:paddingTop="2dp"
+                android:paddingTop="35dp"
                 app:hintTextAppearance="@style/FloatingLabelTextAppearance">
 
                 <EditText
@@ -73,11 +74,12 @@
                     android:layout_weight="0"
                     android:gravity="start|bottom"
                     android:hint="Description"
+                    android:textColorHint="@color/mdtp_light_gray"
                     android:inputType="textMultiLine|textCapSentences"
                     android:lines="2"
                     android:maxLines="3"
                     android:scrollbars="vertical"
-                    android:textColor="@color/icons" />
+                    android:textColor="@color/mdtp_light_gray" />
 
             </com.beastek.tareas.CustomTextInputLayout>
 
@@ -86,7 +88,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1.5"
-                android:background="@color/icons"
                 android:orientation="vertical">
 
                 <LinearLayout

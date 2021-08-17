@@ -123,7 +123,7 @@
     <!--</style>-->
 
     <style name="FloatingLabelTextAppearance" parent="TextAppearance.AppCompat">
-        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColor">@android:color/holo_blue_dark</item>
     </style>
 
     <!--<style name="UnderlineSpinner" parent="@style/ThemeOverlay.AppCompat.ActionBar">-->
