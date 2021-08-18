@@ -86,7 +86,10 @@ public class Note implements Serializable {
             jo.put(JSON_DATETIME, mToDoDate.getTime());
         }
         jo.put(JSON_COLOR, mTodoColor);
-        jo.put(JSON_IDENTIFIER, mTodoIdentifier.toString());
+        if (mTodoIdentifier != null) {
+            jo.put(JSON_IDENTIFIER, mTodoIdentifier.toString());
+        }
+
 
         return jo;
     }

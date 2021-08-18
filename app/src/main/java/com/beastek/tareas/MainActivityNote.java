@@ -6,14 +6,13 @@ import android.content.SharedPreferences;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Build;
 import android.os.Bundle;
 
-import android.text.format.DateFormat;
-import android.util.Log;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -27,7 +26,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -38,9 +36,9 @@ import androidx.cardview.widget.CardView;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import com.beastek.tareas.Note;
+
+import com.amulyakhare.textdrawable.TextDrawable;
 
 public class MainActivityNote extends AppCompatActivity {
 
@@ -91,7 +89,7 @@ public class MainActivityNote extends AppCompatActivity {
               if(mSound){
                     mSp.play(mIdBeep, 1, 1, 0, 0, 1);
                 }
-                Toast.makeText(MainActivityNote.this, "Solo funciona cuando se toca en los bordes de la cardview", Toast.LENGTH_SHORT).show();
+                //make sure the onlongclilclistener is not placed in xml file in all the items, if not, you need to click on the borders
 
                 //Recuperamos la nota de la posición pulsada por el usuario
                 Note tempNote = mNoteAdapter.getItem(itemPos);
@@ -170,7 +168,7 @@ public class MainActivityNote extends AppCompatActivity {
 
             }
             if(item.getItemId()==R.id.item_exit_note){
-                Toast.makeText(MainActivityNote.this, "Salimos sin hacer nada", Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivityNote.this, "Salimos sin hacer cambios", Toast.LENGTH_LONG).show();
                 finish();
             }
 
@@ -311,14 +309,16 @@ public class MainActivityNote extends AppCompatActivity {
             //cargamos todos los widgets del layout
 
             CardView cardView = (CardView)  view.findViewById(R.id.cv_item_list_note);
-
+            ImageView circle = (ImageView) view.findViewById(R.id.circle_image);
             TextView textViewTitle = (TextView) view.findViewById(R.id.text_view_title);
             TextView textViewDescription = (TextView) view.findViewById(R.id.text_view_description);
-            TextView mReminderTextView = (TextView) view.findViewById(R.id.tv_date_listview);
+            TextView mReminderTextView = (TextView) view.findViewById(R.id.text_view_date_listview);
 
             ImageView ivImportant = (ImageView) view.findViewById(R.id.image_view_important);
             ImageView ivTodo = (ImageView) view.findViewById(R.id.image_view_todo);
             ImageView ivIdea = (ImageView) view.findViewById(R.id.image_view_idea);
+
+
 
 
             //y podemos proceder a ocultar las imágenes que sobren del layout...
@@ -345,6 +345,14 @@ public class MainActivityNote extends AppCompatActivity {
             textViewTitle.setText(currentNote.getTitle());
             textViewDescription.setText(currentNote.getDescription());
             mReminderTextView.setText("Aquí iria la fecha");
+            TextDrawable myDrawable = TextDrawable.builder().beginConfig()
+                    .textColor(Color.WHITE)
+                    .useFont(Typeface.DEFAULT)
+                    .toUpperCase()
+                    .endConfig()
+                    .buildRound(currentNote.getTitle().substring(0, 1), currentNote.getmTodoColor());
+            circle.setImageDrawable(myDrawable);
+
 
             return view;
         }
