@@ -386,8 +386,8 @@ public class MainActivityNote extends AppCompatActivity {
                 mReminderTextView.setText(finalString);
 
             } else {
-                 mReminderTextView.setText("no está cogiendo la fecha");
-                //mReminderTextView.setVisibility(View.INVISIBLE);
+                 //mReminderTextView.setText("no está cogiendo la fecha"); podemos poner mensaje o hacerlo invisible
+                mReminderTextView.setVisibility(View.INVISIBLE);
             }
 
             return view;

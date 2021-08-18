@@ -73,7 +73,7 @@ public class DialogNewNote extends DialogFragment implements DatePickerDialog.On
     private String mUserEnteredDescription;
     private boolean mUserHasReminder;
     private Date mUserReminderDate;
-    private LocalDate Today, mUserReminderDateLD;
+    // private LocalDate Today, mUserReminderDateLD;
 
 
     private static final String TAG = "Dialog New Note";
@@ -154,8 +154,6 @@ public class DialogNewNote extends DialogFragment implements DatePickerDialog.On
         btnCancel = (Button) dialogView.findViewById(R.id.btnCancel);
         btnOk = (Button) dialogView.findViewById(R.id.btnOk);
 
-
-
         builder.setView(dialogView)
                 .setMessage("Add a new note ");
         //si quisiéramos introducir una cabecera o mensaje pero quita espacio al dialog
@@ -190,11 +188,17 @@ public class DialogNewNote extends DialogFragment implements DatePickerDialog.On
                     int color = ColorGenerator.MATERIAL.getRandomColor();
                     newNote.setTodoColor(color);
 
-                    if (mToDoDateSwitch.isChecked() && (newNote.getToDoDate() != null)) {
+                    mToDoDateSwitch.setChecked(mUserHasReminder && (mUserReminderDate != null));
+                    // if (mToDoDateSwitch.isChecked() && (newNote.getToDoDate() != null)) {
+                    if (mToDoDateSwitch.isChecked()){
                         newNote.setReminder(true);
+                        Log.i("REMINDER", "ha guardado el reminder como true");
+                        newNote.setToDoDate(mUserReminderDate);
                     } else {
                         newNote.setReminder(false);
+                        Log.i("REMINDER", "ha guardado el reminder como false");
                     }
+                    //newNote.setReminder(true);
                     String identifier = java.util.UUID.randomUUID().toString();
                     newNote.setTodoIdentifier(identifier);
 
@@ -310,11 +314,17 @@ public class DialogNewNote extends DialogFragment implements DatePickerDialog.On
                     int color = ColorGenerator.MATERIAL.getRandomColor();
                     newNote.setTodoColor(color);
 
-                    if (mToDoDateSwitch.isChecked() && (newNote.getToDoDate() != null)) {
+                    mToDoDateSwitch.setChecked(mUserHasReminder && (mUserReminderDate != null));
+                    // if (mToDoDateSwitch.isChecked() && (newNote.getToDoDate() != null)) {
+                    if (mToDoDateSwitch.isChecked()){
                         newNote.setReminder(true);
+                        Log.i("REMINDER", "ha guardado el reminder como true");
+                        newNote.setToDoDate(mUserReminderDate);
                     } else {
                         newNote.setReminder(false);
+                        Log.i("REMINDER", "ha guardado el reminder como false");
                     }
+                    //newNote.setReminder(true);
                     String identifier = java.util.UUID.randomUUID().toString();
                     newNote.setTodoIdentifier(identifier);
 

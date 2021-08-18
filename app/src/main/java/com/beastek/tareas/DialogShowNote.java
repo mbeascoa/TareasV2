@@ -83,7 +83,7 @@ public class DialogShowNote extends DialogFragment {
                 amPmString = formatDate("a", date);
             }
             String finalString = String.format(getResources().getString(R.string.remind_date_and_time), dateString, timeString, amPmString);
-            txtDateTime.setTextColor(getResources().getColor(R.color.secondary_text));
+            txtDateTime.setTextColor(getResources().getColor(R.color.mdtp_accent_color_dark));
             txtDateTime.setText(finalString);
         }
 
