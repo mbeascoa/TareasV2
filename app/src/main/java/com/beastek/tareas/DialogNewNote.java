@@ -170,47 +170,11 @@ public class DialogNewNote extends DialogFragment implements DatePickerDialog.On
         btnOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                //Creamos una nota vacía
-                Note newNote = new Note();
-
-                if (mToDoTextBodyTitle.length() <= 0) {
-                    mToDoTextBodyTitle.setError(getString(R.string.todo_error));
-                } else {
-
-                    //Configuramos las 7 variables de la nota creada
-                    newNote.setTitle(mToDoTextBodyTitle.getText().toString());
-                    newNote.setDescription(mToDoTextBodyDescription.getText().toString());
-
-                    newNote.setIdea(checkBoxIdea.isChecked());
-                    newNote.setTodo(checkBoxTodo.isChecked());
-                    newNote.setImportant(checkBoxImportant.isChecked());
-                    int color = ColorGenerator.MATERIAL.getRandomColor();
-                    newNote.setTodoColor(color);
-
-                    mToDoDateSwitch.setChecked(mUserHasReminder && (mUserReminderDate != null));
-                    // if (mToDoDateSwitch.isChecked() && (newNote.getToDoDate() != null)) {
-                    if (mToDoDateSwitch.isChecked()){
-                        newNote.setReminder(true);
-                        Log.i("REMINDER", "ha guardado el reminder como true");
-                        newNote.setToDoDate(mUserReminderDate);
-                    } else {
-                        newNote.setReminder(false);
-                        Log.i("REMINDER", "ha guardado el reminder como false");
-                    }
-                    //newNote.setReminder(true);
-                    String identifier = java.util.UUID.randomUUID().toString();
-                    newNote.setTodoIdentifier(identifier);
-
-                    //I am casting to MainActivity who is the one thal called the dialog; Hago un casting a Main Activity, que es quien ha llamado al diálogo
-                    MainActivityNote callingActivity = (MainActivityNote) getActivity();
-                    //We will notify the Main Activity that we have created a new Note ; Notificaremos a la MA que hemos creado una nueva nota
-                    callingActivity.createNewNote(newNote);
-                    //This command close the dialog, Esto cierra el diálogo
-                    dismiss();
-                }
+                salir();
             }
         });
+
+
 
         //when clicking in the area that does not contain title and description then hides the keyboard
         mContainerLayout.setOnClickListener(new View.OnClickListener() {
@@ -296,45 +260,7 @@ public class DialogNewNote extends DialogFragment implements DatePickerDialog.On
         mToDoSendFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                //Creamos una nota vacía
-                Note newNote = new Note();
-
-                if (mToDoTextBodyTitle.length() <= 0) {
-                    mToDoTextBodyTitle.setError(getString(R.string.todo_error));
-                } else {
-
-                    //Configuramos las 7 variables de la nota creada
-                    newNote.setTitle(mToDoTextBodyTitle.getText().toString());
-                    newNote.setDescription(mToDoTextBodyDescription.getText().toString());
-
-                    newNote.setIdea(checkBoxIdea.isChecked());
-                    newNote.setTodo(checkBoxTodo.isChecked());
-                    newNote.setImportant(checkBoxImportant.isChecked());
-                    int color = ColorGenerator.MATERIAL.getRandomColor();
-                    newNote.setTodoColor(color);
-
-                    mToDoDateSwitch.setChecked(mUserHasReminder && (mUserReminderDate != null));
-                    // if (mToDoDateSwitch.isChecked() && (newNote.getToDoDate() != null)) {
-                    if (mToDoDateSwitch.isChecked()){
-                        newNote.setReminder(true);
-                        Log.i("REMINDER", "ha guardado el reminder como true");
-                        newNote.setToDoDate(mUserReminderDate);
-                    } else {
-                        newNote.setReminder(false);
-                        Log.i("REMINDER", "ha guardado el reminder como false");
-                    }
-                    //newNote.setReminder(true);
-                    String identifier = java.util.UUID.randomUUID().toString();
-                    newNote.setTodoIdentifier(identifier);
-
-                    //I am casting to MainActivity who is the one thal called the dialog; Hago un casting a Main Activity, que es quien ha llamado al diálogo
-                    MainActivityNote callingActivity = (MainActivityNote) getActivity();
-                    //We will notify the Main Activity that we have created a new Note ; Notificaremos a la MA que hemos creado una nueva nota
-                    callingActivity.createNewNote(newNote);
-                    //This command close the dialog, Esto cierra el diálogo
-                    dismiss();
-                }
+                salir();
             }
         });
 
@@ -394,6 +320,48 @@ public class DialogNewNote extends DialogFragment implements DatePickerDialog.On
         //Una vez configurada nuestro dialogo, le indicamos al builder que debe crearla en pantalla...
         return builder.create();
 
+    }
+    // verify that everything is OK, and save NOTE
+    public void salir(){
+
+        //Creamos una nota vacía
+        Note newNote = new Note();
+
+        if (mToDoTextBodyTitle.length() <= 0) {
+            mToDoTextBodyTitle.setError(getString(R.string.todo_error));
+        } else {
+
+            //Configuramos las 7 variables de la nota creada
+            newNote.setTitle(mToDoTextBodyTitle.getText().toString());
+            newNote.setDescription(mToDoTextBodyDescription.getText().toString());
+
+            newNote.setIdea(checkBoxIdea.isChecked());
+            newNote.setTodo(checkBoxTodo.isChecked());
+            newNote.setImportant(checkBoxImportant.isChecked());
+            int color = ColorGenerator.MATERIAL.getRandomColor();
+            newNote.setTodoColor(color);
+
+            mToDoDateSwitch.setChecked(mUserHasReminder && (mUserReminderDate != null));
+            // if (mToDoDateSwitch.isChecked() && (newNote.getToDoDate() != null)) {
+            if (mToDoDateSwitch.isChecked()){
+                newNote.setReminder(true);
+                Log.i("REMINDER", "ha guardado el reminder como true");
+                newNote.setToDoDate(mUserReminderDate);
+            } else {
+                newNote.setReminder(false);
+                Log.i("REMINDER", "ha guardado el reminder como false");
+            }
+            //newNote.setReminder(true);
+            String identifier = java.util.UUID.randomUUID().toString();
+            newNote.setTodoIdentifier(identifier);
+
+            //I am casting to MainActivity who is the one thal called the dialog; Hago un casting a Main Activity, que es quien ha llamado al diálogo
+            MainActivityNote callingActivity = (MainActivityNote) getActivity();
+            //We will notify the Main Activity that we have created a new Note ; Notificaremos a la MA que hemos creado una nueva nota
+            callingActivity.createNewNote(newNote);
+            //This command close the dialog, Esto cierra el diálogo
+            dismiss();
+        }
     }
 
     // Saves Data and Time Edit Text
