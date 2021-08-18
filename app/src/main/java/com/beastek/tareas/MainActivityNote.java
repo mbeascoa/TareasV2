@@ -13,6 +13,8 @@ import android.media.SoundPool;
 import android.os.Build;
 import android.os.Bundle;
 
+import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -35,8 +37,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
 
 import com.amulyakhare.textdrawable.TextDrawable;
 
@@ -317,6 +322,7 @@ public class MainActivityNote extends AppCompatActivity {
             ImageView ivImportant = (ImageView) view.findViewById(R.id.image_view_important);
             ImageView ivTodo = (ImageView) view.findViewById(R.id.image_view_todo);
             ImageView ivIdea = (ImageView) view.findViewById(R.id.image_view_idea);
+            ImageView ivReminder = (ImageView) view.findViewById(R.id.image_view_reminder);
 
 
 
@@ -341,23 +347,56 @@ public class MainActivityNote extends AppCompatActivity {
             if (!currentNote.isIdea()){
                 ivIdea.setVisibility(View.GONE);
             }
+            if (!currentNote.HasReminder()){
+                ivReminder.setVisibility(View.GONE);
+            }
 
             textViewTitle.setText(currentNote.getTitle());
             textViewDescription.setText(currentNote.getDescription());
-            mReminderTextView.setText("Aquí iria la fecha");
+
             TextDrawable myDrawable = TextDrawable.builder().beginConfig()
                     .textColor(Color.WHITE)
                     .useFont(Typeface.DEFAULT)
                     .toUpperCase()
                     .endConfig()
-                    .buildRound(currentNote.getTitle().substring(0, 1), currentNote.getmTodoColor());
+                    .buildRound(currentNote.getTitle().substring(0, 1), currentNote.getTodoColor());
             circle.setImageDrawable(myDrawable);
+            //ahora ponemos la fecha del reminder   mReminderTextView.setText("Aquí iria la fecha");
+            if (currentNote.getToDoDate() != null) {
+                mReminderTextView.setVisibility(View.VISIBLE);
+                if (currentNote.getToDoDate().before(new Date())) {
+                    Log.d("SET REMINDER", "DATE is " + currentNote.getToDoDate());
+                    mReminderTextView.setText(getString(R.string.date_error_check_again));
+                }
 
+                Date date = currentNote.getToDoDate();
+                String dateString = formatDate("d MMM, yyyy", date);
+                String timeString;
+                String amPmString = "";
+                boolean time24 = DateFormat.is24HourFormat(getApplicationContext());
+                if (time24) {
+                    timeString = formatDate("k:mm", date);
+                } else {
+                    timeString = formatDate("h:mm", date);
+                    amPmString = formatDate("a", date);
+                }
+                String finalString = String.format(getResources().getString(R.string.remind_date_and_time), dateString, timeString, amPmString);
+                mReminderTextView.setTextColor(getResources().getColor(R.color.secondary_text));
+                Toast.makeText(MainActivityNote.this, "estamos jodidos", Toast.LENGTH_SHORT).show();
+                mReminderTextView.setText(finalString);
+
+            } else {
+                 mReminderTextView.setText("no está cogiendo la fecha");
+                //mReminderTextView.setVisibility(View.INVISIBLE);
+            }
 
             return view;
         }
 
-
+        public  String formatDate(String formatString, Date dateToFormat) {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(formatString);
+            return simpleDateFormat.format(dateToFormat);
+        }
 
         public void addNote(Note n){
             noteList.add(n);
@@ -371,6 +410,4 @@ public class MainActivityNote extends AppCompatActivity {
         }
 
     }
-
-
 }

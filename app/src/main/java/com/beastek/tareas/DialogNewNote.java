@@ -52,6 +52,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.time.LocalDate;
+import java.util.UUID;
 
 import static java.time.temporal.TemporalAdjusters.*;
 import static java.time.DayOfWeek.*;
@@ -98,7 +99,7 @@ public class DialogNewNote extends DialogFragment implements DatePickerDialog.On
     public static final String DATE_FORMAT_TIME = "H:m";
 
     private LinearLayout mContainerLayout;
-    private ImageView circle;
+
 
 
     @Override
@@ -152,7 +153,7 @@ public class DialogNewNote extends DialogFragment implements DatePickerDialog.On
 
         btnCancel = (Button) dialogView.findViewById(R.id.btnCancel);
         btnOk = (Button) dialogView.findViewById(R.id.btnOk);
-        circle = (ImageView) dialogView.findViewById(R.id.circle_image);
+
 
 
         builder.setView(dialogView)
@@ -186,7 +187,6 @@ public class DialogNewNote extends DialogFragment implements DatePickerDialog.On
                     newNote.setIdea(checkBoxIdea.isChecked());
                     newNote.setTodo(checkBoxTodo.isChecked());
                     newNote.setImportant(checkBoxImportant.isChecked());
-
                     int color = ColorGenerator.MATERIAL.getRandomColor();
                     newNote.setTodoColor(color);
 
@@ -195,6 +195,8 @@ public class DialogNewNote extends DialogFragment implements DatePickerDialog.On
                     } else {
                         newNote.setReminder(false);
                     }
+                    String identifier = java.util.UUID.randomUUID().toString();
+                    newNote.setTodoIdentifier(identifier);
 
                     //I am casting to MainActivity who is the one thal called the dialog; Hago un casting a Main Activity, que es quien ha llamado al diálogo
                     MainActivityNote callingActivity = (MainActivityNote) getActivity();
@@ -313,6 +315,8 @@ public class DialogNewNote extends DialogFragment implements DatePickerDialog.On
                     } else {
                         newNote.setReminder(false);
                     }
+                    String identifier = java.util.UUID.randomUUID().toString();
+                    newNote.setTodoIdentifier(identifier);
 
                     //I am casting to MainActivity who is the one thal called the dialog; Hago un casting a Main Activity, que es quien ha llamado al diálogo
                     MainActivityNote callingActivity = (MainActivityNote) getActivity();

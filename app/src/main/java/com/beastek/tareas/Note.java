@@ -5,7 +5,7 @@ import org.json.JSONObject;
 
 import java.util.Date;
 import java.io.Serializable;
-import java.util.UUID;
+
 
 
 public class Note implements Serializable {
@@ -18,7 +18,7 @@ public class Note implements Serializable {
     private boolean mHasReminder;
     private Date mToDoDate;
     private int mTodoColor;
-    private UUID mTodoIdentifier;
+    private String mTodoIdentifier;
 
 
     private static final String JSON_TITLE = "title";
@@ -36,7 +36,9 @@ public class Note implements Serializable {
     public Note(){
     }
 
-    public Note(String todoTitle,String todoDescription, boolean todoIdea, boolean todoTodo,  boolean todoImportant ,boolean hasReminder, Date toDoDate) {
+
+
+    public Note(String todoTitle, String todoDescription, boolean todoIdea, boolean todoTodo, boolean todoImportant , boolean hasReminder, Date toDoDate, int toDoColor, String toDoUuid) {
         mTitle = todoTitle;
         mDescription = todoDescription;
         mIdea = todoIdea;
@@ -44,8 +46,8 @@ public class Note implements Serializable {
         mImportant = todoImportant;
         mHasReminder = hasReminder;
         mToDoDate = toDoDate;
-        mTodoColor = 1677725;
-        mTodoIdentifier = UUID.randomUUID();
+        mTodoColor = toDoColor;
+        mTodoIdentifier = toDoUuid ;
 
     }
 
@@ -61,7 +63,8 @@ public class Note implements Serializable {
         mImportant = jo.getBoolean(JSON_IMPORTANT);
         mHasReminder = jo.getBoolean(JSON_HASREMINDER);
         mTodoColor = jo.getInt(JSON_COLOR);
-        mTodoIdentifier = UUID.fromString(jo.getString(JSON_IDENTIFIER));
+       // mTodoIdentifier = UUID.fromString(jo.getString(JSON_IDENTIFIER));
+        mTodoIdentifier= jo.getString(JSON_IDENTIFIER);
         if (jo.has(JSON_DATETIME)) {
             mToDoDate = new Date(jo.getLong(JSON_DATETIME));
         }
@@ -85,14 +88,20 @@ public class Note implements Serializable {
         if (mToDoDate != null) {
             jo.put(JSON_DATETIME, mToDoDate.getTime());
         }
+
         jo.put(JSON_COLOR, mTodoColor);
+        jo.put(JSON_IDENTIFIER, mTodoIdentifier);
+        return jo;
+    }
+
+        /*
         if (mTodoIdentifier != null) {
             jo.put(JSON_IDENTIFIER, mTodoIdentifier.toString());
         }
 
+         */
 
-        return jo;
-    }
+
 
 
     public String getTitle() {
@@ -153,7 +162,7 @@ public class Note implements Serializable {
     }
 
 
-    public int getmTodoColor() {
+    public int getTodoColor() {
         return mTodoColor;
     }
 
@@ -161,9 +170,12 @@ public class Note implements Serializable {
         this.mTodoColor = mTodoColor;
     }
 
-    public UUID getmTodoIdentifier() {
+    public String getTodoIdentifier() {
         return mTodoIdentifier;
     }
 
+    public void setTodoIdentifier(String mTodoIdentifier) {
+        this.mTodoIdentifier = mTodoIdentifier;
+    }
 
 }
