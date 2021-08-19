@@ -178,4 +178,18 @@ public class Note implements Serializable {
         this.mTodoIdentifier = mTodoIdentifier;
     }
 
+    @Override
+    public String toString() {
+        return "Note{" +
+                "mTitle='" + mTitle + '\'' +
+                ", mDescription='" + mDescription + '\'' +
+                ", mIdea=" + mIdea +
+                ", mTodo=" + mTodo +
+                ", mImportant=" + mImportant +
+                ", mHasReminder=" + mHasReminder +
+                ", mToDoDate=" + mToDoDate +
+                ", mTodoColor=" + mTodoColor +
+                ", mTodoIdentifier='" + mTodoIdentifier + '\'' +
+                '}';
+    }
 }

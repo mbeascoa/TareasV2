@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".caca"
+            android:exported="true" />
+        <activity
             android:name=".DialogNewNote"
             android:exported="true" />
         <activity
@@ -25,6 +28,10 @@
         <activity
             android:name=".SettingsActivityNote"
             android:label="@string/activity_settings_title"
+            android:parentActivityName=".MainActivityNote" />
+        <activity
+            android:name=".MainSetNotification"
+            android:label="Set Reminder"
             android:parentActivityName=".MainActivityNote" />
     </application>
 

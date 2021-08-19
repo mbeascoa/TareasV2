@@ -169,11 +169,16 @@ public class MainActivityNote extends AppCompatActivity {
                 mode.finish();
             }
             if (item.getItemId()==R.id.item_add_date_note){
-                Toast.makeText(MainActivityNote.this, "We add a reminder to the note", Toast.LENGTH_LONG).show();
 
+                    Log.i("Mandando", String.valueOf(noteSelectedId));
+                    Intent i = new Intent (MainActivityNote.this, MainSetNotification.class);
+                    i.putExtra("SELECTEDNOTE", noteSelectedId);
+                    startActivity(i);
+
+                    Toast.makeText(MainActivityNote.this, "We add a reminder to the note", Toast.LENGTH_LONG).show();
             }
             if(item.getItemId()==R.id.item_exit_note){
-                Toast.makeText(MainActivityNote.this, "Salimos sin hacer cambios", Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivityNote.this, "OK THANKS FOR CHANGING THE APPOINTMENT DATE", Toast.LENGTH_LONG).show();
                 finish();
             }
 
@@ -184,6 +189,7 @@ public class MainActivityNote extends AppCompatActivity {
         public void onDestroyActionMode(ActionMode mode) {
         }
     };
+
 
     // delete the selected Item within the list view
     private void deleteNote(int whichItem){
