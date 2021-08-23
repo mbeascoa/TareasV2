@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Consultas.Detalle_ToDo"
+    android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/imageViewImportant"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            app:srcCompat="@drawable/ic_warning_black_24dp" />
+
+        <ImageView
+            android:id="@+id/imageViewToDo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/imageViewImportant"
+            app:srcCompat="@drawable/ic_check_box_outline_blank_black_24dp" />
+
+        <ImageView
+            android:id="@+id/imageViewIdea"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/imageViewToDo"
+            app:srcCompat="@drawable/ic_wb_incandescent_black_24dp" />
+
+        <EditText
+            android:id="@+id/txtTitle_show_ToDo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imageViewIdea"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:text="@string/title_hint"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+        <EditText
+            android:id="@+id/txtDescription_show_ToDo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtTitle_show_ToDo"
+            android:layout_alignStart="@+id/txtTitle_show_ToDo"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="25dp"
+            android:text="@string/description_hint"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+
+        <TextView
+            android:id="@+id/txtReminder_show_ToDo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtDescription_show_ToDo"
+            android:layout_alignStart="@+id/txtDescription_show_ToDo"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="25dp"
+            android:text="Has or not reminder" />
+
+        <TextView
+            android:id="@+id/txtDate_show_ToDo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtReminder_show_ToDo"
+            android:layout_alignStart="@+id/txtReminder_show_ToDo"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="25dp"
+            android:gravity="start"
+            android:text="Date" />
+
+        <Button
+            android:id="@+id/btn_selehora"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:layout_below="@+id/btn_selefecha"
+            android:layout_marginTop="25dp"
+            android:text="CAMBIAR HORA" />
+
+        <TextView
+            android:id="@+id/tv_fecha"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtDate_show_ToDo"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
+            android:text="Fecha"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tv_ampm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtDate_show_ToDo"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="30dp"
+            android:text="AM/PM"
+            android:textSize="18sp" />
+
+
+        <Button
+            android:id="@+id/btn_selefecha"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtDate_show_ToDo"
+            android:layout_marginTop="30dp"
+            android:text="Cambiar Fecha" />
+
+
+        <TextView
+            android:id="@+id/tv_hora"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/btn_selefecha"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="25dp"
+            android:text="hora"
+            android:textSize="18sp" />
+
+        <LinearLayout
+            android:id="@+id/ll_icons"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_below="@+id/tv_hora"
+            android:layout_marginTop="30dp"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/checkBoxIdea"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_weight="1.2"
+                android:text="@string/idea_checkbox" />
+
+
+            <CheckBox
+                android:id="@+id/checkBoxTodo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_weight="1.5"
+                android:text="@string/todo_checkbox" />
+
+            <CheckBox
+                android:id="@+id/checkBoxImportant"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_weight="1.8"
+                android:text="@string/important_checkbox" />
+
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_guardar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ll_icons"
+            android:layout_marginTop="20dp"
+            android:text="Guardar Notificación" />
+
+
+        <Button
+            android:id="@+id/btn_eliminar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Eliminar Notificación"
+            android:layout_below="@+id/ll_icons"
+            android:layout_marginTop="20dp"
+            android:layout_alignParentEnd="true" />
+
+
+        <Button
+            android:id="@+id/btn_salir"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/btn_eliminar"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:text="OK" />
+</RelativeLayout>
+
+

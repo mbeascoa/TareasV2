@@ -1,23 +1,14 @@
 package com.beastek.tareas;
 
 
-import static android.app.Activity.RESULT_CANCELED;
-import static android.app.Activity.RESULT_OK;
 import static android.content.Context.INPUT_METHOD_SERVICE;
-import static android.content.Context.MODE_PRIVATE;
 
 import android.animation.Animator;
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 
 import android.text.Editable;
@@ -37,13 +28,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
-import androidx.appcompat.widget.Toolbar;
-import android.widget.ImageView;
-import androidx.core.app.NavUtils;
 import androidx.fragment.app.DialogFragment;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -51,24 +37,16 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.time.LocalDate;
-import java.util.UUID;
-
-import static java.time.temporal.TemporalAdjusters.*;
-import static java.time.DayOfWeek.*;
 
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
-import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
 
 
 public class DialogNewNote extends DialogFragment implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
     private String CombinationText;
-    private boolean setDateButtonClickedOnce = false;
-    private boolean setTimeButtonClickedOnce = false;
     private String mUserEnteredTittle;
     private String mUserEnteredDescription;
     private boolean mUserHasReminder;
@@ -128,7 +106,7 @@ public class DialogNewNote extends DialogFragment implements DatePickerDialog.On
 
         mToDoSendFloatingActionButton = (FloatingActionButton) dialogView.findViewById(R.id.makeToDoFloatingActionButton);
         //filed where we show the reminder detail (date and time), final part of the screen
-        mReminderTextView = (TextView) dialogView.findViewById(R.id.newToDoDateTimeReminderTextView);
+        mReminderTextView = (TextView) dialogView.findViewById(R.id.altaToDoTimeReminderTV);
 
         //Button for Copy to Clipboard
         mCopyClipboard = (Button) dialogView.findViewById(R.id.copyclipboard);
@@ -266,7 +244,7 @@ public class DialogNewNote extends DialogFragment implements DatePickerDialog.On
 
 
         // filed that places the Date as string, from mUserReminderDate
-        mDateEditText = (EditText) dialogView.findViewById(R.id.newTodoDateEditText);
+        mDateEditText = (EditText) dialogView.findViewById(R.id.altaTodoDateET);
 
         //Listener to Date picker
         mDateEditText.setOnClickListener(new View.OnClickListener() {
@@ -292,7 +270,7 @@ public class DialogNewNote extends DialogFragment implements DatePickerDialog.On
         });
 
         //field where we put the time from mUserReminderDate
-        mTimeEditText = (EditText) dialogView.findViewById(R.id.newTodoTimeEditText);
+        mTimeEditText = (EditText) dialogView.findViewById(R.id.altaTodoTimeET);
 
         // listener to Edit Time
         mTimeEditText.setOnClickListener(new View.OnClickListener() {

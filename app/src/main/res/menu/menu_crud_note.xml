@@ -3,10 +3,15 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:icon="@android:drawable/ic_menu_delete"
+        android:id="@+id/item_google_sheet"
+        android:icon="@android:drawable/sym_contact_card"
+        android:title="Working in Google Sheets"
+         />
+    <item
         android:id="@+id/item_delete_note"
+        android:icon="@android:drawable/ic_menu_delete"
         android:title="Delete Note"
-        app:showAsAction="always"/>
+        app:showAsAction="always" />
     <item
         android:icon="@android:drawable/ic_menu_my_calendar"
         android:id="@+id/item_add_date_note"

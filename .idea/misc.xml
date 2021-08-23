@@ -18,23 +18,34 @@
         <entry key="app/src/main/res/layout/about_layout.xml" value="0.12760416666666666" />
         <entry key="app/src/main/res/layout/about_layout_old.xml" value="0.12760416666666666" />
         <entry key="app/src/main/res/layout/activity_about.xml" value="0.12760416666666666" />
+        <entry key="app/src/main/res/layout/activity_alta_registro.xml" value="0.25052083333333336" />
+        <entry key="app/src/main/res/layout/activity_alta_registro_todo.xml" value="0.25052083333333336" />
+        <entry key="app/src/main/res/layout/activity_buscarporid.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_caca.xml" value="0.12760416666666666" />
+        <entry key="app/src/main/res/layout/activity_detalle_todo.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_dialog_new_note.xml" value="0.25052083333333336" />
+        <entry key="app/src/main/res/layout/activity_listado_registros.xml" value="0.25052083333333336" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.29583333333333334" />
-        <entry key="app/src/main/res/layout/activity_main_setnotifications.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_main_consultas.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_main_setnotifications.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_settings.xml" value="0.128125" />
         <entry key="app/src/main/res/layout/activity_settings_note.xml" value="0.128125" />
+        <entry key="app/src/main/res/layout/activity_sign_up_registro.xml" value="0.12760416666666666" />
         <entry key="app/src/main/res/layout/base_toolbar.xml" value="0.128125" />
         <entry key="app/src/main/res/layout/dialog_new_note.xml" value="0.25052083333333336" />
         <entry key="app/src/main/res/layout/dialog_new_note_old.xml" value="0.25052083333333336" />
         <entry key="app/src/main/res/layout/dialog_show_note.xml" value="0.16770833333333332" />
+        <entry key="app/src/main/res/layout/dialog_show_note_old.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_about.xml" value="0.335" />
         <entry key="app/src/main/res/layout/layout_fragment_container.xml" value="0.128125" />
         <entry key="app/src/main/res/layout/list_item.xml" value="0.1" />
         <entry key="app/src/main/res/layout/list_item_note.xml" value="0.128125" />
+        <entry key="app/src/main/res/layout/lista_datos_cardview.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/lista_todo_cardview.xml" value="0.25052083333333336" />
         <entry key="app/src/main/res/menu/menu_crud_note.xml" value="0.128125" />
         <entry key="app/src/main/res/menu/menu_main.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/menu/menu_main_note.xml" value="0.1" />
+        <entry key="app/src/main/res/menu/menu_navegacion.xml" value="0.12760416666666666" />
       </map>
     </option>
   </component>

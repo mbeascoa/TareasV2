@@ -23,7 +23,7 @@ import androidx.work.WorkManager;
 
 import com.amulyakhare.textdrawable.util.ColorGenerator;
 
-import org.w3c.dom.Text;
+import com.beastek.tareas.MainActivityNote.NoteAdapter.*;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -41,6 +41,10 @@ public class MainSetNotification extends AppCompatActivity {
     private ImageView ivImportant, ivTodo, ivIdea;
     private JSONSerializerNote mSerializer;
     private CheckBox checkBoxIdea, checkBoxTodo,checkBoxImportant ;
+    private Calendar  actual , reminderCalendar;
+    private int y,mon,d,h,min;
+    private Date mUserReminderDate;
+    private List<Note> noteList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +53,7 @@ public class MainSetNotification extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         int noteSelectedId = bundle.getInt("SELECTEDNOTE");
+
 
 
         List<Note> noteList = new ArrayList<Note>();
@@ -63,6 +68,7 @@ public class MainSetNotification extends AppCompatActivity {
         }
 
         Note currentNote = noteList.get(noteSelectedId);
+
         Log.d("Notificacion llegando", currentNote.toString());
 
         txtTitle = (EditText) findViewById(R.id.txtTitle_show_note);
@@ -130,7 +136,8 @@ public class MainSetNotification extends AppCompatActivity {
         btnOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                salir();
+                salir(noteSelectedId);
+
                 finish();
             }
         });
@@ -140,8 +147,10 @@ public class MainSetNotification extends AppCompatActivity {
         tvfecha = findViewById(R.id.tv_fecha);
         tvhora = findViewById(R.id.tv_hora);
 
-        Calendar actual = Calendar.getInstance();
-        Calendar calendar = Calendar.getInstance();
+        //actual date
+        actual = Calendar.getInstance();
+        //date to remind
+        reminderCalendar = Calendar.getInstance();
 
         selefecha.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -152,13 +161,12 @@ public class MainSetNotification extends AppCompatActivity {
 
                 DatePickerDialog datePickerDialog = new DatePickerDialog(v.getContext(), new DatePickerDialog.OnDateSetListener() {
                     @Override
-                    public void onDateSet(DatePicker view, int y, int m, int d) {
-                        calendar.set(Calendar.DAY_OF_MONTH, d);
-                        calendar.set(Calendar.MONTH, m);
-                        calendar.set(Calendar.YEAR, y);
+                    public void onDateSet(DatePicker view, int y, int mon, int d) {
+                        setDate(y,mon,d);
                         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-                        String strDate = format.format(calendar.getTime());
+                        String strDate = format.format(reminderCalendar.getTime());
                         tvfecha.setText(strDate);
+                        mUserReminderDate= reminderCalendar.getTime();
                     }
                 }, anio, mes, dia);
                 datePickerDialog.show();
@@ -175,10 +183,12 @@ public class MainSetNotification extends AppCompatActivity {
                 TimePickerDialog timePickerDialog = new TimePickerDialog(v.getContext(), new TimePickerDialog.OnTimeSetListener() {
 
                     @Override
-                    public void onTimeSet(TimePicker view, int h, int m) {
-                        calendar.set(Calendar.DAY_OF_MONTH, h);
-                        calendar.set(Calendar.MONTH, m);
-                        tvhora.setText(String.format("%02d:%02d", h, m));
+                    public void onTimeSet(TimePicker view, int h, int min) {
+                        setTime( h, min);
+                        reminderCalendar.set(Calendar.HOUR_OF_DAY, h);
+                        reminderCalendar.set(Calendar.MINUTE, min);
+                        tvhora.setText(String.format("%02d:%02d", h, min));
+                        mUserReminderDate= reminderCalendar.getTime();
                     }
                 }, hora, minutos, true);
                 timePickerDialog.show();
@@ -193,7 +203,7 @@ public class MainSetNotification extends AppCompatActivity {
             public void onClick(View view) {
                 String tag1 = generateKey();
 
-                Long Alerttime = calendar.getTimeInMillis() - System.currentTimeMillis();
+                Long Alerttime = reminderCalendar.getTimeInMillis() - System.currentTimeMillis();
                 String alerta = String.valueOf(Alerttime);
                 Toast.makeText(MainSetNotification.this, alerta, Toast.LENGTH_SHORT).show();
                 int random = (int) (Math.random() * 50 + 1);
@@ -215,6 +225,7 @@ public class MainSetNotification extends AppCompatActivity {
     }
 
     private String generateKey() {
+
         return UUID.randomUUID().toString();
     }
 
@@ -242,7 +253,7 @@ public class MainSetNotification extends AppCompatActivity {
     }
 
     // verify that everything is OK, and save NOTE
-    public void salir() {
+    public void salir( int noteSelectedId) {
 
         //Creamos una nota vacía
         Note currentNote = new Note();
@@ -264,22 +275,87 @@ public class MainSetNotification extends AppCompatActivity {
             currentNote.setImportant(checkBoxImportant.isChecked());
             int color = ColorGenerator.MATERIAL.getRandomColor();
             currentNote.setTodoColor(color);
-/*
-            mToDoDateSwitch.setChecked(mUserHasReminder && (mUserReminderDate != null));
-            // if (mToDoDateSwitch.isChecked() && (currentNote.getToDoDate() != null)) {
-            if (mToDoDateSwitch.isChecked()) {
+            if (actual.getTime().before(reminderCalendar.getTime())){
                 currentNote.setReminder(true);
-                Log.i("REMINDER", "ha guardado el reminder como true");
                 currentNote.setToDoDate(mUserReminderDate);
             } else {
                 currentNote.setReminder(false);
-                Log.i("REMINDER", "ha guardado el reminder como false");
+                Log.i("Note saves as :", currentNote.toString());
             }
 
- */
-            //currentNote.setReminder(true);
+
+
+            //currentNote.set identifierr;
             String identifier = java.util.UUID.randomUUID().toString();
             currentNote.setTodoIdentifier(identifier);
+
+            noteList.set(noteSelectedId, currentNote);
         }
+    }
+    public void setDate(int year, int month, int day) {
+        Calendar actual = Calendar.getInstance();
+        int hour, minute;
+
+
+        Calendar reminderCalendar = Calendar.getInstance();
+        reminderCalendar.set(year, month, day);
+
+        if (reminderCalendar.before(actual)) {
+            Toast.makeText(MainSetNotification.this, "We only add dates from now on. Not in the past", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (mUserReminderDate != null) {
+            reminderCalendar.setTime(mUserReminderDate);
+        }
+
+        if (DateFormat.is24HourFormat(getApplicationContext())) {
+            hour = reminderCalendar.get(Calendar.HOUR_OF_DAY);
+        } else {
+
+            hour = reminderCalendar.get(Calendar.HOUR);
+        }
+        minute = reminderCalendar.get(Calendar.MINUTE);
+
+        reminderCalendar.set(year, month, day, hour, minute);
+        mUserReminderDate = reminderCalendar.getTime();
+        setDateEditText();
+
+    }
+
+    // settles the time
+    public void setTime(int hour, int minute) {
+        Calendar calendar = Calendar.getInstance();
+        if (mUserReminderDate != null) {
+            calendar.setTime(mUserReminderDate);
+        }
+        if (reminderCalendar.before(actual)) {
+            Toast.makeText(MainSetNotification.this, "We only add dates from now on. Not in the past", Toast.LENGTH_SHORT).show();
+            return;
+        } else {
+            int year = reminderCalendar.get(Calendar.YEAR);
+            int month = reminderCalendar.get(Calendar.MONTH);
+            int day = reminderCalendar.get(Calendar.DAY_OF_MONTH);
+            Log.d("Miguel Beascoa", "Time set: " + hour);
+            calendar.set(year, month, day, hour, minute, 0);
+            mUserReminderDate = reminderCalendar.getTime();
+            setTimeEditText();
+        }
+
+    }
+    public void setDateEditText() {
+        String dateFormat = "d MMM, yyyy";
+        tvfecha.setText(formatDate(dateFormat, mUserReminderDate));
+    }
+
+    public void setTimeEditText() {
+        String dateFormat;
+        if (DateFormat.is24HourFormat(getApplicationContext())) {
+            dateFormat = "k:mm";
+        } else {
+            dateFormat = "h:mm a";
+
+        }
+        tvhora.setText(formatDate(dateFormat, mUserReminderDate));
     }
 }

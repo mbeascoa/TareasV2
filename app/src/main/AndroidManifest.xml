@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.beastek.tareas">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,9 +11,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".caca"
-            android:exported="true" />
         <activity
             android:name=".DialogNewNote"
             android:exported="true" />
@@ -33,6 +32,26 @@
             android:name=".MainSetNotification"
             android:label="Set Reminder"
             android:parentActivityName=".MainActivityNote" />
+        <activity
+            android:name=".Consultas.MainActivityConsultas"
+            android:label="Queries"/>
+        <activity android:name=".Consultas.SignUp_Registro"
+            android:label="Sign Up"/>
+        <activity android:name=".Consultas.Detalle_ToDo"
+            android:label="More Detail"/>
+        <activity android:name=".Consultas.Listado_registros_ToDo"
+            android:label="List View"/>
+        <activity android:name=".Consultas.Alta_registro_todo"
+            android:label="Add"/>
+        <activity android:name=".Consultas.Buscarporid"
+            android:label="Search by Name"/>
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
+
     </application>
+
+
+
 
 </manifest>

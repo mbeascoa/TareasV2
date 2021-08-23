@@ -24,7 +24,9 @@ public class SettingsActivityNote extends AppCompatActivity {
     public static final int FAST = 0; //Quick animations, Animaciones rápidas
     public static final int SLOW = 1; //Slow animations Animaciones lentas
     public static final int NONE = 2; //Without animations Sin animaciones
-
+    //public static final String GSAPI = "https://sheet.best/api/sheets/b706d82d-0d00-475f-a9d4-626566535083";  //GoogleSheets API
+    public static final String GSAPI = "https://sheetdb.io/api/v1/ahhtehepl6e9f";
+    //public static final String GSAPIKEY = "VyTblD#cpn1zfx%LxC6sY1nmxW9q9UOpEzvYtZIcNMvuFiV7a@DY3OkQsWuDVAXB"; // GoogleSheets ApiKey
     private int mAnimationOption; //In order to chang animation type, Para cambiar el tipo de animación en la app
 
 

@@ -44,6 +44,7 @@ import java.util.List;
 
 
 import com.amulyakhare.textdrawable.TextDrawable;
+import com.beastek.tareas.Consultas.MainActivityConsultas;
 
 public class MainActivityNote extends AppCompatActivity {
 
@@ -164,6 +165,15 @@ public class MainActivityNote extends AppCompatActivity {
 
         @Override
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+            if (item.getItemId()==R.id.item_google_sheet){
+
+                Log.i("Working ", "with google");
+                Intent i = new Intent (MainActivityNote.this, MainActivityConsultas.class);
+
+                startActivity(i);
+
+                Toast.makeText(MainActivityNote.this, "We start working with Google Sheets", Toast.LENGTH_LONG).show();
+            }
             if(item.getItemId()== R.id.item_delete_note){
                 deleteNote(noteSelectedId);
                 mode.finish();
@@ -179,7 +189,7 @@ public class MainActivityNote extends AppCompatActivity {
             }
             if(item.getItemId()==R.id.item_exit_note){
                 Toast.makeText(MainActivityNote.this, "OK THANKS FOR CHANGING THE APPOINTMENT DATE", Toast.LENGTH_LONG).show();
-                finish();
+                mode.finish();
             }
 
             return false;
@@ -220,6 +230,10 @@ public class MainActivityNote extends AppCompatActivity {
     public void createNewNote(Note newNote){
         //Este método, recibirá una nueva nota creada por el diálogo pertinente...
         mNoteAdapter.addNote(newNote);
+    }
+    public void editNewNote(int whichitem, Note newNote){
+        //Este método, recibirá una nueva nota creada por el diálogo pertinente...
+        mNoteAdapter.editNote(whichitem, newNote);
     }
 
     @Override
@@ -359,7 +373,7 @@ public class MainActivityNote extends AppCompatActivity {
 
             textViewTitle.setText(currentNote.getTitle());
             textViewDescription.setText(currentNote.getDescription());
-
+            //we create the Circle Bottom with the Initial UpperCase Letter
             TextDrawable myDrawable = TextDrawable.builder().beginConfig()
                     .textColor(Color.WHITE)
                     .useFont(Typeface.DEFAULT)
@@ -409,6 +423,10 @@ public class MainActivityNote extends AppCompatActivity {
             notifyDataSetChanged();
         }
 
+        public void editNote(int whichitem, Note n){
+            noteList.set(whichitem, n);
+            notifyDataSetChanged();
+        }
 
         public void deleteNote(int n){
             noteList.remove(n);

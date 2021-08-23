@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:baselineAligned="false"
+    android:orientation="vertical"
+    tools:context=".Consultas.Buscarporid">
+
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="24sp"
+        android:text="     BUSQUEDA POR NUMERO IDENTIFICADOR"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="18dp"
+        android:paddingTop="24dp"
+        android:text="NUMERO DE  IDENTIFICADOR:"
+        android:textSize="18sp" />
+
+    <EditText
+        android:id="@+id/et_numero_buscar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="number"
+        android:paddingLeft="18dp"
+        android:paddingTop="24dp"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/btn_buscarporid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="24sp"
+        android:text="SEARCH TODO" />
+
+    <TextView
+        android:id="@+id/tv_ResultadoBusqueda"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24sp"
+        android:textSize="24sp" />
+
+    <Button
+        android:id="@+id/btn_regresar_buscar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="24sp"
+        android:gravity="center_horizontal"
+        android:onClick="cerrarVentana"
+        android:text="EXIT" />
+
+</LinearLayout>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/item_consultar"
+        android:title="Consultar" />
+    <item
+        android:id="@+id/item_alta_registro"
+        android:title="Alta Registro" />
+    <item
+        android:id="@+id/item_signup"
+        android:title="Registro SignUp" />
+    <item
+        android:id="@+id/item_navegar"
+        android:title="Buscar por Departamento" />
+</menu>

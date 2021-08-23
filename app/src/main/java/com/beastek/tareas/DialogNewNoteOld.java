@@ -68,7 +68,7 @@ public class DialogNewNoteOld extends DialogFragment {
         final ImageButton reminderIconImageButton = (ImageButton) dialogView.findViewById(R.id.userToDoReminderIconImageButton);
         final TextView reminderRemindMeTextView = (TextView) dialogView.findViewById(R.id.userToDoRemindMeTextView);
         final SwitchCompat mToDoDateSwitch = (SwitchCompat) dialogView.findViewById(R.id.toDoHasDateSwitchCompat);
-        final TextView mReminderTextView = (TextView) dialogView.findViewById(R.id.newToDoDateTimeReminderTextView);
+        final TextView mReminderTextView = (TextView) dialogView.findViewById(R.id.altaToDoTimeReminderTV);
 
 
         final CheckBox checkBoxIdea = (CheckBox) dialogView.findViewById(R.id.checkBoxIdea);
