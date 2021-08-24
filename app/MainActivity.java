@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
                 //Creamos una instancia de show note
                 DialogShowNote dialog = new DialogShowNote();
                 dialog.sendNoteSelected(tempNote);
-                dialog.show(getFragmentManager(),"");
+                dialog.show(getFragmentManager(),"SN");
             }
         });
 

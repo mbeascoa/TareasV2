@@ -13,7 +13,7 @@ import java.io.Serializable;
 
 
 
-public class ToDos  {
+public class ToDos implements Serializable {
 
     private String mTitle;
     private String mDescription;

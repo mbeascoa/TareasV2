@@ -4,14 +4,17 @@
 
     <item
         android:id="@+id/item_consultar"
-        android:title="Consultar" />
+        android:title="Consultar todas las tareas " />
     <item
         android:id="@+id/item_alta_registro"
-        android:title="Alta Registro" />
+        android:title="Alta Tarea" />
     <item
         android:id="@+id/item_signup"
         android:title="Registro SignUp" />
     <item
-        android:id="@+id/item_navegar"
-        android:title="Buscar por Departamento" />
+        android:id="@+id/item_consultarporId"
+        android:title="Buscar por identificador" />
+    <item
+        android:id="@+id/item_consultarpornombre"
+        android:title="Buscar por nombre de tarea" />
 </menu>

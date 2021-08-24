@@ -40,7 +40,7 @@ import com.beastek.tareas.R;
 
 public class Listado_registros_ToDo extends AppCompatActivity {
     private RecyclerView miRecicler;
-    private RecyclerView.Adapter miAdpater;
+    private RecyclerView.Adapter miAdapter;
     private static final String TAG= MainActivityConsultas.class.getSimpleName();
 
     //01
@@ -128,8 +128,8 @@ public class Listado_registros_ToDo extends AppCompatActivity {
                 JSONArray jsonarray = new JSONArray(result);
                 List<com.beastek.tareas.Consultas.ToDos> lista = convertirJsonToDos(jsonarray);
                 //Especificamos el adaptador con la lista a visualizar
-                miAdpater= new Adaptador(lista);
-                miRecicler.setAdapter(miAdpater);
+                miAdapter= new Adaptador(lista);
+                miRecicler.setAdapter(miAdapter);
 
             } catch (JSONException e){
                 System.out.println(e.toString());
@@ -181,12 +181,12 @@ public class Listado_registros_ToDo extends AppCompatActivity {
 
     /**  05.5
      * Permite convertir un String en fecha (Date).
-     * @param fecha Cadena de fecha dd/MM/yyyy
+     * @param fecha Cadena de fecha "dd-MM-yyyy HH:mm:ss"
      * @return Objeto Date
      */
     public static Date ParseFecha(String fecha)
     {
-        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         Date fechaDate = null;
         try {
             fechaDate = formato.parse(fecha);
@@ -228,12 +228,16 @@ public class Listado_registros_ToDo extends AppCompatActivity {
         } else if( id== R.id.item_signup){
             Intent i = new Intent(this, SignUp_Registro.class);
             startActivity(i);
-        }else if (id== R.id.item_navegar){
+        }else if (id== R.id.item_consultarporId){
 
             //accion = new Intent("android.intent.action.VIEW", Uri.parse("http://developer.android.com"));
             accion = new Intent(this, com.beastek.tareas.Consultas.Buscarporid.class);
             startActivity(accion);
+        }  else if (id== R.id.item_consultarpornombre){
+            accion = new Intent (this, BuscarporNombre.class);
+            startActivity(accion);
         }
+
         return true;
     }
 

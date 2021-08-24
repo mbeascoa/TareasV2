@@ -15,11 +15,13 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.beastek.tareas.R;
+import com.beastek.tareas.Consultas.ToDos;
 
 public class MainActivityConsultas extends AppCompatActivity {
 
-    ImageButton botonleer, botonalta, botonnavegar, botonregistro;
-    TextView txtdatos;
+    private ImageButton botonleer, botonalta, botonnavegar, botonregistro;
+    private TextView txtdatos;
+    private ToDos existingToDo;
 
     //01
     @Override
@@ -29,55 +31,58 @@ public class MainActivityConsultas extends AppCompatActivity {
         this.txtdatos = (TextView) findViewById(R.id.txExamenAndroid);
         this.botonalta = (ImageButton) findViewById(R.id.button_topleft);
         this.botonleer = (ImageButton) findViewById(R.id.button_downleft);
-        this.botonnavegar= (ImageButton) findViewById(R.id.button_topright);
-        this.botonregistro=(ImageButton) findViewById(R.id.button_downright);
+        this.botonnavegar = (ImageButton) findViewById(R.id.button_topright);
+        this.botonregistro = (ImageButton) findViewById(R.id.button_downright);
 
 
         // gestionamos la accion del boton insertar
-        this.botonalta.setOnClickListener(new OnClickListener()  {
+        this.botonalta.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-            insertarRegistro();
-    }
+                insertarRegistro();
+            }
 
-    });
+        });
         //gestionamos la accion del boton leer
-        this.botonleer.setOnClickListener(new OnClickListener()  {
+        this.botonleer.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 leerRegistros();
             }
 
         });
         // gestionamos el boton navegar
-        this.botonnavegar.setOnClickListener(new OnClickListener()  {
+        this.botonnavegar.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 //navegar();
-                Intent i = new Intent(MainActivityConsultas.this, Buscarporid.class );
+                Intent i = new Intent(MainActivityConsultas.this, Buscarporid.class);
                 startActivity(i);
             }
 
         });
 
         // gestionamos el registro del usuario
-        this.botonregistro.setOnClickListener(new OnClickListener()  {
+        this.botonregistro.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 registrosingup();
             }
 
         });
 
-}
 
-    //03  insertamos un registro nuevo
-    public void insertarRegistro (){
+
+    }
+
+
+
+    //04  insertamos un registro nuevo
+    public void insertarRegistro() {
 
         Intent i = new Intent(this, Alta_registro_todo.class);
         startActivity(i);
     }
 
-    //04 método para leer los registros
+    //05 método para leer los registros
 
-    public void leerRegistros (){
-
+    public void leerRegistros() {
 
         Intent i = new Intent(this, Listado_registros_ToDo.class);
         startActivity(i);
@@ -108,12 +113,14 @@ public class MainActivityConsultas extends AppCompatActivity {
             leerRegistros();
         } else if (id == R.id.item_alta_registro) {
             insertarRegistro();
-        } else if( id== R.id.item_signup){
+        } else if (id == R.id.item_signup) {
             registrosingup();
-         }else if (id== R.id.item_navegar)
-        {
+        } else if (id == R.id.item_consultarporId) {
             //accion = new Intent("android.intent.action.VIEW", Uri.parse("http://developer.android.com"));
             accion = new Intent(this, Buscarporid.class);
+            startActivity(accion);
+        } else if (id == R.id.item_consultarpornombre) {
+            accion = new Intent(this, BuscarporNombre.class);
             startActivity(accion);
         }
 
@@ -122,12 +129,13 @@ public class MainActivityConsultas extends AppCompatActivity {
     }
 
     //08 Método para navegar por internet
-    public void navegar () {
+    public void navegar() {
         Intent accion;
         accion = new Intent("android.intent.action.VIEW", Uri.parse("http://developer.android.com"));
         startActivity(accion);
     }
-  // 08 Método para SIGNUP del usuario de la aplicación
+
+    // 09 Método para SIGNUP del usuario de la aplicación
     public void registrosingup() {
         Intent accion;
         accion = new Intent(this, SignUp_Registro.class);

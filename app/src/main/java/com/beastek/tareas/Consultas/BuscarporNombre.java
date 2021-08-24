@@ -41,29 +41,24 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.beastek.tareas.Consultas.Adaptador;
-import com.beastek.tareas.Consultas.Alta_registro_todo;
-import com.beastek.tareas.Consultas.MainActivityConsultas;
-import com.beastek.tareas.Consultas.SignUp_Registro;
-import com.beastek.tareas.Consultas.ToDos;
 import com.beastek.tareas.R;
 
 
-public class Buscarporid extends AppCompatActivity {
+public class BuscarporNombre extends AppCompatActivity {
     private RecyclerView miRecicler;
     private RecyclerView.Adapter miAdapter;
     private TextView resultado;
     private EditText title;
     private Button botonRegresar, btnBuscarPorId;
     private static final String TAG = MainActivityConsultas.class.getSimpleName();
-    private String taskid;
+    private String taskname;
 
 
     //01
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_buscarporid);
+        setContentView(R.layout.activity_buscarpor_nombre);
 
         this.title = (EditText) findViewById(R.id.et_numero_buscar);
         this.botonRegresar = (Button) findViewById(R.id.btn_regresar_buscar);
@@ -73,9 +68,9 @@ public class Buscarporid extends AppCompatActivity {
         //gestionamos la accion del boton Buscar por departamento
         this.btnBuscarPorId.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                taskid = title.getText().toString();
-                Log.i(TAG, "onCreate Buscamos por id Todo  : " + taskid);
-                leerServicio(taskid);
+                taskname = title.getText().toString();
+                Log.i(TAG, "onCreate Buscamos por nombre Todo  : " + taskname);
+                leerServicio(taskname);
             }
         });
 
@@ -90,16 +85,16 @@ public class Buscarporid extends AppCompatActivity {
     }
 
     //02
-    public void leerServicio(String taskid) {
+    public void leerServicio(String taskname) {
         try {
 
             String urlbase = GSAPI;
-            String param = "/search?JSON_IDENTIFIER=" + taskid;
+            String param = "/search?JSON_TITLE=*" + taskname + "*";
             String url = urlbase + param;
-            //https://sheetdb.io/api/v1/ahhtehepl6e9f/search?JSON_IDENTIFIER=1
+            //https://sheetdb.io/api/v1/ahhtehepl6e9f/search?JSON_TITLE=*primera*&limit=1
             Log.i(TAG, "La url de acceso a los servicios web Restfull es : " + url);
             mensajePersonalizado(url);
-            new com.beastek.tareas.Consultas.Buscarporid.HttpAsyncTask().execute(url);
+            new HttpAsyncTask().execute(url);
         } catch (Exception e) {
             //manage exception
             System.out.println(e.toString());
