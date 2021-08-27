@@ -21,6 +21,8 @@ import java.util.Date;
 public class DialogShowNote extends DialogFragment {
 
     private com.beastek.tareas.Note mNote;
+    private ImageView ivImportant, ivTodo, ivIdea;
+    private TextView txtTitle,txtDescription, txtReminder, txtDateTime;
 
     public void sendNoteSelected(com.beastek.tareas.Note noteSelected){
         this.mNote = noteSelected;
@@ -37,18 +39,18 @@ public class DialogShowNote extends DialogFragment {
 
         View dialogView = inflater.inflate(R.layout.dialog_show_note, null);
 
-        TextView txtTitle = (TextView) dialogView.findViewById(R.id.txtTitle_show_note);
-        TextView txtDescription = (TextView) dialogView.findViewById(R.id.txtDescription_show_note);
-        TextView txtReminder = (TextView) dialogView.findViewById(R.id.txtReminder_show_note);
-        TextView txtDateTime = (TextView) dialogView.findViewById(R.id.txtDate_show_note);
+         txtTitle = (TextView) dialogView.findViewById(R.id.txtTitle_show_note);
+         txtDescription = (TextView) dialogView.findViewById(R.id.txtDescription_show_note);
+         txtReminder = (TextView) dialogView.findViewById(R.id.txtReminder_show_note);
+         txtDateTime = (TextView) dialogView.findViewById(R.id.txtDate_show_note);
 
         txtTitle.setText(mNote.getTitle());
         txtDescription.setText(mNote.getDescription());
 
 
-        ImageView ivImportant = (ImageView) dialogView.findViewById(R.id.imageViewImportant);
-        ImageView ivTodo = (ImageView) dialogView.findViewById(R.id.imageViewTodo);
-        ImageView ivIdea = (ImageView) dialogView.findViewById(R.id.imageViewIdea);
+        ivImportant = (ImageView) dialogView.findViewById(R.id.imageViewImportant);
+        ivTodo = (ImageView) dialogView.findViewById(R.id.imageViewTodo);
+        ivIdea = (ImageView) dialogView.findViewById(R.id.imageViewIdea);
 
 
         //Cada imagen se oculta si la nota no es de ese tipo

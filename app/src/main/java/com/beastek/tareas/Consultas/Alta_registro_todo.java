@@ -43,7 +43,6 @@ import java.util.List;
 import java.util.UUID;
 
 import com.amulyakhare.textdrawable.util.ColorGenerator;
-import com.beastek.tareas.DialogNewNote;
 import com.beastek.tareas.Note;
 import com.beastek.tareas.R;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
@@ -496,7 +495,6 @@ public class Alta_registro_todo extends AppCompatActivity implements DatePickerD
 
 
 
-
             } catch (ClientProtocolException e) {
                 // TODO Auto-generated catch block
             } catch (IOException e) {
@@ -532,17 +530,16 @@ public class Alta_registro_todo extends AppCompatActivity implements DatePickerD
     //06
     public void accionAceptar() {
 
-
         String url = GSAPI;
         new HttpAsyncTask().execute(url);
         mensajePersonalizado("Adding a ToDo in Google Sheets, thanks!");
-        finish();;
+        finish();
 
     }
 
     //07
     public void accionCancelar() {
-        //mensajePersonalizado("Cancelling , not adding the ToDo");
+        mensajePersonalizado("Cancelling , not adding the ToDo");
         finish();
     }
 

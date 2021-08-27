@@ -23,6 +23,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,6 +44,8 @@ import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
 
+import org.json.JSONException;
+
 
 public class DialogModificarTodo extends DialogFragment implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
@@ -52,11 +55,7 @@ public class DialogModificarTodo extends DialogFragment implements DatePickerDia
     private boolean mUserHasReminder;
     private Date mUserReminderDate;
 
-
     private static final String TAG = "Dialog Modify ToDo";
-
-
-    private EditText mToDoTextBodyTitle, mToDoTextBodyDescription;
 
     private SwitchCompat mToDoDateSwitch;
 
@@ -64,12 +63,12 @@ public class DialogModificarTodo extends DialogFragment implements DatePickerDia
     private TextView mReminderTextView, reminderRemindMeTextView;
 
     private CheckBox checkBoxIdea, checkBoxTodo, checkBoxImportant;
-    private EditText mDateEditText, mTimeEditText;
+    private EditText mToDoTextBodyTitle, mToDoTextBodyDescription, mDateEditText, mTimeEditText;
     private String mDefaultTimeOptions12H[], mDefaultTimeOptions24H[];
     private ImageButton reminderIconImageButton;
     private Button btnCancel, btnOk, mChooseDateButton, mChooseTimeButton, mCopyClipboard;
 
-    private ToDos mUserToDoItem;
+    private com.beastek.tareas.Consultas.ToDos mToDo;
     private FloatingActionButton mToDoSendFloatingActionButton;
     public static final String DATE_FORMAT = "MMM d, yyyy";
     public static final String DATE_FORMAT_MONTH_DAY = "MMM d";
@@ -78,10 +77,14 @@ public class DialogModificarTodo extends DialogFragment implements DatePickerDia
     private LinearLayout mContainerLayout;
 
 
-    private ToDos mToDo;
+    public void sendNoteSelected(ToDos data) {
+        mToDo = data;
+        if (mToDo != null) {
+            System.out.println("He recibido esta ToDo entrando en el DialogModificarTodo" + mToDo.toString());
+        } else {
+            System.out.println("He recibido un ToDo null");
+        }
 
-    public void sendNoteSelected(ToDos noteSelected){
-        this.mToDo = noteSelected;
     }
 
 
@@ -94,7 +97,12 @@ public class DialogModificarTodo extends DialogFragment implements DatePickerDia
 
         View dialogView = inflater.inflate(R.layout.dialog_modify_todo, null);
         mToDoTextBodyTitle = (EditText) dialogView.findViewById(R.id.userToDoEditTextTitle);
+        mUserEnteredTittle = mToDo.getTitle().toString();
+
+        System.out.println("He recibido esta ToDo entrando en el onCreateDiagog de  DialogModificarTodo" + mToDo.toString());
+
         mToDoTextBodyDescription = (EditText) dialogView.findViewById(R.id.userToDoDescription);
+        mUserEnteredDescription = mToDo.getDescription().toString();
 
 
         reminderIconImageButton = (ImageButton) dialogView.findViewById(R.id.userToDoReminderIconImageButton);
@@ -105,9 +113,9 @@ public class DialogModificarTodo extends DialogFragment implements DatePickerDia
         //this layout is the one that appears when Switch is clicked, then you can fill date and time
         mUserDateSpinnerContainingLinearLayout = (LinearLayout) dialogView.findViewById(R.id.toDoEnterDateLinearLayout);
 
-        mToDoTextBodyTitle = (EditText) dialogView.findViewById(R.id.userToDoEditTextTitle);
-        mToDoTextBodyDescription = (EditText) dialogView.findViewById(R.id.userToDoDescription);
+
         mToDoDateSwitch = (SwitchCompat) dialogView.findViewById(R.id.toDoHasDateSwitchCompat);
+
 
         mToDoSendFloatingActionButton = (FloatingActionButton) dialogView.findViewById(R.id.makeToDoFloatingActionButton);
         //filed where we show the reminder detail (date and time), final part of the screen
@@ -131,8 +139,11 @@ public class DialogModificarTodo extends DialogFragment implements DatePickerDia
         });
 
         checkBoxIdea = (CheckBox) dialogView.findViewById(R.id.checkBoxIdea);
+        checkBoxIdea.setChecked(mToDo.isIdea());
         checkBoxTodo = (CheckBox) dialogView.findViewById(R.id.checkBoxTodo);
+        checkBoxTodo.setChecked(mToDo.isTodo());
         checkBoxImportant = (CheckBox) dialogView.findViewById(R.id.checkBoxImportant);
+        checkBoxImportant.setChecked(mToDo.isImportant());
 
         btnCancel = (Button) dialogView.findViewById(R.id.btnCancel);
         btnOk = (Button) dialogView.findViewById(R.id.btnOk);
@@ -167,6 +178,9 @@ public class DialogModificarTodo extends DialogFragment implements DatePickerDia
             }
         });
 
+        mUserHasReminder = mToDo.HasReminder();
+        mUserReminderDate = mToDo.getToDoDate();
+
         if (mUserHasReminder && (mUserReminderDate != null)) {
 //            mUserDateSpinnerContainingLinearLayout.setVisibility(View.VISIBLE);
             setReminderTextView();
@@ -177,9 +191,9 @@ public class DialogModificarTodo extends DialogFragment implements DatePickerDia
             mReminderTextView.setVisibility(View.INVISIBLE);
         }
 
-        mToDoTextBodyTitle.requestFocus();
+
         mToDoTextBodyTitle.setText(mUserEnteredTittle);
-        mToDoTextBodyDescription.setText(mUserEnteredDescription);
+
         InputMethodManager imm = (InputMethodManager) this.getActivity().getSystemService(INPUT_METHOD_SERVICE);
 
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
@@ -335,13 +349,18 @@ public class DialogModificarTodo extends DialogFragment implements DatePickerDia
                 Log.i("REMINDER", "ha guardado el reminder como false");
             }
             //existingToDo.setReminder(true);
-            String identifier = java.util.UUID.randomUUID().toString();
+            //String identifier = java.util.UUID.randomUUID().toString();
+            String identifier = mToDo.getTodoIdentifier();
             existingToDo.setTodoIdentifier(identifier);
 
             //I am casting to MainActivity who is the one thal called the dialog; Hago un casting a Main Activity, que es quien ha llamado al diálogo
             ActivityModificarToDo callingActivity = (ActivityModificarToDo) getActivity();
             //We will notify the Main Activity that we have created a new Note ; Notificaremos a la MA que hemos creado una nueva nota
-            callingActivity.modifyExistingToDo(existingToDo);
+            try {
+                callingActivity.modifyExistingToDo(existingToDo);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
             //This command close the dialog, Esto cierra el diálogo
             dismiss();
         }

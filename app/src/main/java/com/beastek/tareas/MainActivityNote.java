@@ -402,7 +402,7 @@ public class MainActivityNote extends AppCompatActivity {
                 }
                 String finalString = String.format(getResources().getString(R.string.remind_date_and_time), dateString, timeString, amPmString);
                 mReminderTextView.setTextColor(getResources().getColor(R.color.secondary_text));
-                Toast.makeText(MainActivityNote.this, "estamos jodidos", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MainActivityNote.this, "estamos jodidos", Toast.LENGTH_SHORT).show();
                 mReminderTextView.setText(finalString);
 
             } else {

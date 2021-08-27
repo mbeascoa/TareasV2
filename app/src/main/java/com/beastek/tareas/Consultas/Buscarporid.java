@@ -41,11 +41,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.beastek.tareas.Consultas.Adaptador;
-import com.beastek.tareas.Consultas.Alta_registro_todo;
-import com.beastek.tareas.Consultas.MainActivityConsultas;
-import com.beastek.tareas.Consultas.SignUp_Registro;
-import com.beastek.tareas.Consultas.ToDos;
 import com.beastek.tareas.R;
 
 
@@ -80,7 +75,7 @@ public class Buscarporid extends AppCompatActivity {
         });
 
         //Buscamos el control para cargar los datos
-        miRecicler = (RecyclerView) findViewById(R.id.rv_ToDos_Consulta);
+        miRecicler = (RecyclerView) findViewById(R.id.rv_ToDos_detalle);
         //añadimos que el tamaño del RecyclerView no se cambiará
         //que tiene hijos (items) que tienen anchura y altura fijas
         //permite que el recyclerView optimice mejor.

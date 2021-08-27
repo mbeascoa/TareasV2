@@ -21,9 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-
 public class AdaptadorDetalle extends RecyclerView.Adapter<AdaptadorDetalle.ViewHolder>{
-
     private Date reminderdate;
     private String descriptiond,titled, fechaComoCadena;
     private CheckBox cbidea, cdtodo, cbimportant;
@@ -34,7 +32,6 @@ public class AdaptadorDetalle extends RecyclerView.Adapter<AdaptadorDetalle.View
     public AdaptadorDetalle(List<ToDos> ListaToDo) {
         this.listaToDos= ListaToDo;
     }
-
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.lista_tododetalle_cardview,parent,false);
@@ -69,9 +66,8 @@ public class AdaptadorDetalle extends RecyclerView.Adapter<AdaptadorDetalle.View
             @Override
             public void onClick(View v) {
 
-                //Recuperamos la nota de la posición pulsada por el usuario
+            //Recuperamos la nota de la posición pulsada por el usuario
                 ToDos tempToDo = listaToDos.get(position);
-
                 Intent i = new Intent(holder.itemView.getContext(), ActivityModificarToDo.class);
 
                 Bundle bundle = new Bundle();
@@ -104,6 +100,7 @@ public class AdaptadorDetalle extends RecyclerView.Adapter<AdaptadorDetalle.View
             cbimportant = (CheckBox) v.findViewById(R.id.checkBoxImportant);
             cvRelleno = (CardView) v.findViewById(R.id.card_datos);
         }
-    }
-}
 
+    }
+
+}

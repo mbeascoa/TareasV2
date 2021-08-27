@@ -63,7 +63,7 @@ tools:context=".Consultas.BuscarporNombre">
             android:orientation="vertical">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_ToDos_Consulta"
+                android:id="@+id/rv_ToDos_detalle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 

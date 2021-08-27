@@ -3,10 +3,12 @@ package com.beastek.tareas.Consultas;
 import static com.beastek.tareas.SettingsActivityNote.GSAPI;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -39,13 +41,17 @@ import java.util.Date;
 import java.util.List;
 
 import com.beastek.tareas.R;
+import com.google.android.material.snackbar.Snackbar;
 
-public class Detalle_ToDo extends AppCompatActivity {
+public class Detalle_ToDo extends AppCompatActivity  {
 
     private Button botonRegresar;
     private static final String TAG= Detalle_ToDo.class.getSimpleName();
     private RecyclerView miRecicler;
-    private RecyclerView.Adapter miAdapter;
+    //private RecyclerView.Adapter miAdapter;
+    private AdaptadorDetalle adapter;
+    private  List<ToDos> lista;
+    //private RecyclerView.LayoutManager layoutManager;
 
     //01
     @Override
@@ -54,21 +60,29 @@ public class Detalle_ToDo extends AppCompatActivity {
         setContentView(R.layout.activity_detalle_todo);
         botonRegresar = (Button) findViewById(R.id.btn_regresar_detalle);
 
-        //Buscamos el control para cargar los datos
-        miRecicler = (RecyclerView) findViewById(R.id.rv_ToDos_Consulta);
-        //añadimos que el tamaño del RecyclerView no se cambiará
-        //que tiene hijos (items) que tienen anchura y altura fijas
-        //permite que el recyclerView optimice mejor.
-        miRecicler.setHasFixedSize(true);
-        miRecicler.setLayoutManager((new LinearLayoutManager(this)));
-
-
 
         //Recogemos los parámetros enviados por el primer Activity a través del método getExtras
         Bundle bundle = getIntent().getExtras();
         String ideToDo = bundle.getString( "NUMEROTODO");
         Log.i(TAG, "onCreate Detalle ToDo  : " + ideToDo);
+
+        //Buscamos el control para cargar los datos
+        miRecicler = (RecyclerView) findViewById(R.id.rv_ToDos_detalle);
+        //añadimos que el tamaño del RecyclerView no se cambiará
+        //que tiene hijos (items) que tienen anchura y altura fijas
+        //permite que el recyclerView optimice mejor.
+        miRecicler.setHasFixedSize(true);
+        miRecicler.setLayoutManager((new LinearLayoutManager(this)));
         leerservicio(ideToDo);
+
+        //adapter = new AdaptadorDetalle(getBaseContext(),lista);
+
+        //miRecicler.setAdapter(adapter);
+
+
+
+
+
     }
 
 
@@ -149,10 +163,20 @@ public class Detalle_ToDo extends AppCompatActivity {
             Toast.makeText(getBaseContext(), "Datos recibidos", Toast.LENGTH_SHORT).show();
             try {
                 JSONArray jsonarray = new JSONArray(result);
-                List<ToDos> lista = convertirJsonToDos(jsonarray);
+                 lista = convertirJsonToDos(jsonarray);
                 //Especificamos el adaptador con la lista a visualizar
-                miAdapter = new AdaptadorDetalle(lista);
-                miRecicler.setAdapter(miAdapter);
+                //adapter = new AdaptadorDetalle(getBaseContext(),lista);
+                adapter = new AdaptadorDetalle(lista);
+                miRecicler.setAdapter(adapter);
+/*
+                ItemTouchHelper.SimpleCallback simpleCallback =
+                        new RecyclerItemTouchHelper(0, ItemTouchHelper.LEFT, Detalle_ToDo.this);
+
+                new ItemTouchHelper(simpleCallback).attachToRecyclerView(miRecicler);
+
+
+
+ */
 
             } catch (JSONException e) {
                 System.out.println(e.toString());
@@ -282,6 +306,41 @@ public class Detalle_ToDo extends AppCompatActivity {
         finish();
     }
 
+    /*
+    //10 swipe effect for deleting the detailed ToDos
+
+    @Override
+     public void onSwipe(RecyclerView.ViewHolder viewHolder, int direction, int position) {
+         if(viewHolder instanceof Adaptador.ViewHolder){
+
+             final String titulo = lista.get(viewHolder.getAdapterPosition()).getTitle();
+             final ToDos todoBorrado = lista.get(viewHolder.getAdapterPosition());
+             final int deletedIntex = viewHolder.getAdapterPosition();
+
+             adapter.removeItem(viewHolder.getAdapterPosition());
+
+             recuperarCocheBorrado(viewHolder,titulo,todoBorrado,deletedIntex);
+
+         }
+     }
+
+    private void recuperarCocheBorrado(RecyclerView.ViewHolder viewHolder,String titulo,
+                                       final ToDos todoBorrado, final int deletedIntex){
+
+        Snackbar snackbar = Snackbar.make(((AdaptadorDetalle.ViewHolder)viewHolder).layoutABorrar,
+                titulo + " eliminado", Snackbar.LENGTH_LONG);
+        snackbar.setAction("Deshacer", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                adapter.restoreItem(todoBorrado, deletedIntex);
+            }
+        });
+
+        snackbar.setActionTextColor(Color.GREEN);
+        snackbar.show();
+    }
+
+     */
 
 
 }

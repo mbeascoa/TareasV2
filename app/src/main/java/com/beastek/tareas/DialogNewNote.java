@@ -100,8 +100,7 @@ public class DialogNewNote extends DialogFragment implements DatePickerDialog.On
         //this layout is the one that appears when Switch is clicked, then you can fill date and time
         mUserDateSpinnerContainingLinearLayout = (LinearLayout) dialogView.findViewById(R.id.toDoEnterDateLinearLayout);
 
-        mToDoTextBodyTitle = (EditText) dialogView.findViewById(R.id.userToDoEditTextTitle);
-        mToDoTextBodyDescription = (EditText) dialogView.findViewById(R.id.userToDoDescription);
+
         mToDoDateSwitch = (SwitchCompat) dialogView.findViewById(R.id.toDoHasDateSwitchCompat);
 
         mToDoSendFloatingActionButton = (FloatingActionButton) dialogView.findViewById(R.id.makeToDoFloatingActionButton);

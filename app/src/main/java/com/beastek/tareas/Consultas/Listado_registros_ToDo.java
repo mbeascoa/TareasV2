@@ -43,6 +43,7 @@ public class Listado_registros_ToDo extends AppCompatActivity {
     private RecyclerView.Adapter miAdapter;
     private static final String TAG= MainActivityConsultas.class.getSimpleName();
 
+
     //01
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +51,7 @@ public class Listado_registros_ToDo extends AppCompatActivity {
         setContentView(R.layout.activity_listado_registros);
         leerServicio();
         //Buscamos el control para cargar los datos
-        miRecicler=(RecyclerView) findViewById(R.id.rv_ToDos_Consulta);
+        miRecicler=(RecyclerView) findViewById(R.id.rv_ToDos_detalle);
         //añadimos que el tamaño del RecyclerView no se cambiará
         //que tiene hijos (items) que tienen anchura y altura fijas
         //permite que el recyclerView optimice mejor.
@@ -138,11 +139,11 @@ public class Listado_registros_ToDo extends AppCompatActivity {
         }
 
 
-        public List<com.beastek.tareas.Consultas.ToDos> convertirJsonToDos(JSONArray jsonarray) throws JSONException {
-            List<com.beastek.tareas.Consultas.ToDos> lista = new ArrayList<>();
+        public List<ToDos> convertirJsonToDos(JSONArray jsonarray) throws JSONException {
+            List<ToDos> lista = new ArrayList<>();
 
             for ( int i=0; i< jsonarray.length(); i++) {
-                com.beastek.tareas.Consultas.ToDos todito = new com.beastek.tareas.Consultas.ToDos();
+                ToDos todito = new ToDos();
                 String tit, des, idea, tod, imp, has, dat, col, iden;
 
                 tit = jsonarray.getJSONObject(i).optString("JSON_TITLE").toString();

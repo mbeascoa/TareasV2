@@ -75,7 +75,7 @@ public class BuscarporNombre extends AppCompatActivity {
         });
 
         //Buscamos el control para cargar los datos
-        miRecicler = (RecyclerView) findViewById(R.id.rv_ToDos_Consulta);
+        miRecicler = (RecyclerView) findViewById(R.id.rv_ToDos_detalle);
         //añadimos que el tamaño del RecyclerView no se cambiará
         //que tiene hijos (items) que tienen anchura y altura fijas
         //permite que el recyclerView optimice mejor.

@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".Consultas.DeleteToDos"
+            android:exported="true" />
+        <activity
             android:name=".Consultas.ActivityModificarToDo"
             android:exported="true" />
         <activity
